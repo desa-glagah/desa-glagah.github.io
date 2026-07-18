@@ -31,11 +31,11 @@ async function dgRenderInformasi(container) {
       <div class="grid md:grid-cols-5 gap-5 mb-12">
         <div class="md:col-span-3 rounded-xl overflow-hidden border border-emerald-100 shadow-sm aspect-video">
           <iframe
-            title="Peta lokasi Desa Glagah, Kecamatan Pakuniran, Kabupaten Probolinggo"
+            title="Peta lokasi Kantor Desa Glagah, Kecamatan Pakuniran, Kabupaten Probolinggo"
             class="w-full h-full"
             loading="lazy"
             referrerpolicy="no-referrer-when-downgrade"
-            src="https://www.google.com/maps?q=Glagah,+Pakuniran,+Probolinggo&output=embed">
+            src="https://www.google.com/maps?q=Kantor+Desa+Glagah,+Pakuniran,+Probolinggo&output=embed">
           </iframe>
         </div>
         <div class="md:col-span-2 rounded-xl border border-emerald-100 bg-white p-5 shadow-sm text-sm text-gray-600 space-y-3">
