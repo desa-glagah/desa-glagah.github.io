@@ -1,14 +1,14 @@
 // js/pages/informasi.js
 
 const DG_STRUKTUR = [
-  { jabatan: 'Kepala Desa', nama: 'H. Ahmad Suryadi' },
-  { jabatan: 'Sekretaris Desa', nama: 'Siti Rohmawati' },
-  { jabatan: 'Kepala Urusan Keuangan', nama: 'Budi Santoso' },
-  { jabatan: 'Kepala Urusan Umum', nama: 'Dewi Lestari' },
-  { jabatan: 'Kepala Seksi Pemerintahan', nama: 'Rudi Hartono' },
-  { jabatan: 'Kepala Seksi Kesejahteraan', nama: 'Nur Aini' },
-  { jabatan: 'Kepala Dusun Krajan', nama: 'Slamet Widodo' },
-  { jabatan: 'Kepala Dusun Sumberejo', nama: 'Yanto Prasetyo' },
+  { jabatan: 'Kepala Desa', nama: 'Pak Inggi' },
+  { jabatan: 'Sekretaris Desa', nama: '-' },
+  { jabatan: 'Kepala Urusan Keuangan', nama: '-' },
+  { jabatan: 'Kepala Urusan Umum', nama: '-' },
+  { jabatan: 'Kepala Seksi Pemerintahan', nama: '-' },
+  { jabatan: 'Kepala Seksi Kesejahteraan', nama: '-' },
+  { jabatan: 'Kepala Dusun Krajan', nama: '-' },
+  { jabatan: 'Kepala Dusun Sumberejo', nama: '-' },
 ];
 
 const DG_DEMOGRAFI = [
