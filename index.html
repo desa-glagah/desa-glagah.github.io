@@ -45,14 +45,16 @@
           <span class="font-display font-bold tracking-wide text-white text-sm sm:text-base">DESA GLAGAH</span>
         </a>
 
-        <nav class="hidden md:flex items-center gap-8" aria-label="Navigasi utama">
+        <nav class="hidden lg:flex items-center gap-6" aria-label="Navigasi utama">
           <a href="#/lowongan" class="dg-nav-link text-sm font-semibold text-emerald-50 hover:text-amber-400 transition-colors tracking-wide">LOWONGAN PEKERJAAN</a>
           <a href="#/informasi" class="dg-nav-link text-sm font-semibold text-emerald-50 hover:text-amber-400 transition-colors tracking-wide">INFORMASI DESA</a>
+          <a href="#/profil" class="dg-nav-link text-sm font-semibold text-emerald-50 hover:text-amber-400 transition-colors tracking-wide">PROFIL DESA</a>
           <a href="#/umkm" class="dg-nav-link text-sm font-semibold text-emerald-50 hover:text-amber-400 transition-colors tracking-wide">KATALOG UMKM</a>
+          <a href="#/berita" class="dg-nav-link text-sm font-semibold text-emerald-50 hover:text-amber-400 transition-colors tracking-wide">BERITA DESA</a>
         </nav>
 
         <button id="dg-mobile-menu-toggle" type="button" aria-label="Buka menu navigasi" aria-controls="dg-mobile-menu"
-          class="md:hidden text-emerald-50 p-2 -mr-2">
+          class="lg:hidden text-emerald-50 p-2 -mr-2">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
             <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
           </svg>
@@ -60,11 +62,13 @@
       </div>
     </div>
 
-    <nav id="dg-mobile-menu" class="hidden md:hidden border-t border-emerald-800 bg-emerald-900" aria-label="Navigasi mobile">
+    <nav id="dg-mobile-menu" class="hidden lg:hidden border-t border-emerald-800 bg-emerald-900" aria-label="Navigasi mobile">
       <div class="max-w-6xl mx-auto px-4 py-3 flex flex-col gap-1">
         <a href="#/lowongan" class="dg-nav-link text-sm font-semibold text-emerald-50 py-2.5 tracking-wide">LOWONGAN PEKERJAAN</a>
         <a href="#/informasi" class="dg-nav-link text-sm font-semibold text-emerald-50 py-2.5 tracking-wide">INFORMASI DESA</a>
+        <a href="#/profil" class="dg-nav-link text-sm font-semibold text-emerald-50 py-2.5 tracking-wide">PROFIL DESA</a>
         <a href="#/umkm" class="dg-nav-link text-sm font-semibold text-emerald-50 py-2.5 tracking-wide">KATALOG UMKM</a>
+        <a href="#/berita" class="dg-nav-link text-sm font-semibold text-emerald-50 py-2.5 tracking-wide">BERITA DESA</a>
       </div>
     </nav>
   </header>
@@ -87,7 +91,9 @@
         <ul class="space-y-2 text-emerald-200/70">
           <li><a href="#/lowongan" class="hover:text-amber-400 transition-colors">Lowongan Pekerjaan</a></li>
           <li><a href="#/informasi" class="hover:text-amber-400 transition-colors">Informasi Desa</a></li>
+          <li><a href="#/profil" class="hover:text-amber-400 transition-colors">Profil Desa</a></li>
           <li><a href="#/umkm" class="hover:text-amber-400 transition-colors">Katalog UMKM</a></li>
+          <li><a href="#/berita" class="hover:text-amber-400 transition-colors">Berita Desa</a></li>
         </ul>
       </div>
       <div>
@@ -95,6 +101,18 @@
         <ul class="space-y-2 text-emerald-200/70">
           <li>Kantor Desa Glagah, Kec. Pakuniran</li>
           <li>Kabupaten Probolinggo, Jawa Timur</li>
+          <li>
+            <a href="tel:+62335123456" class="hover:text-amber-400 transition-colors inline-flex items-center gap-2">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+              (0335) 123-456
+            </a>
+          </li>
+          <li>
+            <a href="mailto:desaglagah@pakuniran.probolinggokab.go.id" class="hover:text-amber-400 transition-colors inline-flex items-center gap-2">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+              desaglagah@pakuniran.probolinggokab.go.id
+            </a>
+          </li>
         </ul>
       </div>
     </div>
@@ -111,7 +129,9 @@
   <script src="js/pages/home.js"></script>
   <script src="js/pages/lowongan.js"></script>
   <script src="js/pages/informasi.js"></script>
+  <script src="js/pages/profil.js"></script>
   <script src="js/pages/umkm.js"></script>
+  <script src="js/pages/berita.js"></script>
   <!-- Router (must load last) -->
   <script src="js/app.js"></script>
 </body>

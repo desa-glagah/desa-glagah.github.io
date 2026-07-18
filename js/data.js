@@ -63,6 +63,16 @@ async function dgLoadUMKM() {
   }
 }
 
+async function dgLoadBerita() {
+  try {
+    const berita = await dgFetchJSON('data/berita.json');
+    return [...berita].sort((a, b) => new Date(b.tanggal) - new Date(a.tanggal));
+  } catch (err) {
+    console.error(err);
+    return [];
+  }
+}
+
 function dgGenerateId(prefix) {
   return `${prefix}-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 7)}`;
 }

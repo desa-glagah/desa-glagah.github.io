@@ -1,16 +1,5 @@
 // js/pages/informasi.js
 
-const DG_STRUKTUR = [
-  { jabatan: 'Kepala Desa', nama: 'PAK INGGI' },
-  { jabatan: 'Sekretaris Desa', nama: '-' },
-  { jabatan: 'Kepala Urusan Keuangan', nama: '-' },
-  { jabatan: 'Kepala Urusan Umum', nama: '-' },
-  { jabatan: 'Kepala Seksi Pemerintahan', nama: '-' },
-  { jabatan: 'Kepala Seksi Kesejahteraan', nama: '-' },
-  { jabatan: 'Kepala Dusun Krajan', nama: '-' },
-  { jabatan: 'Kepala Dusun Sumberejo', nama: '-' },
-];
-
 const DG_DEMOGRAFI = [
   { label: 'Total Penduduk', value: '3.482 jiwa', icon: 'users' },
   { label: 'Kepala Keluarga', value: '1.024 KK', icon: 'home' },
@@ -32,7 +21,7 @@ async function dgRenderInformasi(container) {
         <p class="dg-badge text-amber-400 mb-2">Profil Wilayah</p>
         <h1 class="font-display text-3xl sm:text-4xl font-extrabold text-white mb-2">Informasi Desa Glagah</h1>
         <p class="text-emerald-100 max-w-2xl text-sm sm:text-base">
-          Desa Glagah, Kecamatan Pakuniran, Kabupaten Probolinggo — mengenal wilayah, warga, dan pemerintahan desa.
+          Desa Glagah, Kecamatan Pakuniran, Kabupaten Probolinggo — mengenal wilayah dan data warga.
         </p>
       </div>
     </section>
@@ -56,7 +45,7 @@ async function dgRenderInformasi(container) {
       </div>
 
       <h2 class="font-display text-xl font-bold text-emerald-950 mb-4">Data Kependudukan</h2>
-      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-12">
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
         ${DG_DEMOGRAFI.map((d) => `
           <div class="dg-card rounded-xl border border-emerald-100 bg-white p-5 shadow-sm">
             <div class="h-10 w-10 rounded-lg bg-amber-100 flex items-center justify-center mb-3">
@@ -68,32 +57,10 @@ async function dgRenderInformasi(container) {
         `).join('')}
       </div>
 
-      <h2 class="font-display text-xl font-bold text-emerald-950 mb-4">Struktur Perangkat Desa</h2>
-      <div class="rounded-xl border border-emerald-100 bg-white shadow-sm overflow-hidden">
-        <ul class="divide-y divide-emerald-50">
-          ${DG_STRUKTUR.map((s) => {
-            const isKosong = !s.nama || s.nama.trim() === '-';
-            const inisial = isKosong
-              ? '?'
-              : s.nama.trim().split(' ').map((n) => n[0]).slice(0, 2).join('');
-            return `
-            <li class="flex items-center justify-between gap-4 px-5 py-4">
-              <div class="flex items-center gap-3">
-                <div class="h-9 w-9 rounded-full flex items-center justify-center text-xs font-bold font-display shrink-0 ${
-                  isKosong ? 'bg-gray-100 text-gray-400' : 'bg-emerald-900 text-amber-400'
-                }">
-                  ${dgEscapeHTML(inisial)}
-                </div>
-                <p class="font-medium text-sm ${isKosong ? 'text-gray-400 italic' : 'text-emerald-950'}">
-                  ${isKosong ? 'Belum terisi' : dgEscapeHTML(s.nama)}
-                </p>
-              </div>
-              <span class="dg-badge text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-full">${dgEscapeHTML(s.jabatan)}</span>
-            </li>
-          `;
-          }).join('')}
-        </ul>
-      </div>
+      <p class="mt-8 text-sm text-gray-500">
+        Ingin tahu lebih jauh tentang visi, misi, dan jajaran perangkat desa?
+        Kunjungi halaman <a href="#/profil" class="text-emerald-800 font-medium hover:text-amber-600 transition-colors">Profil Desa</a>.
+      </p>
     </section>
   `;
 }

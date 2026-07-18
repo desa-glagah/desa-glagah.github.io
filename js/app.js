@@ -8,7 +8,9 @@ const DG_ROUTES = {
   '/': dgRenderHome,
   '/lowongan': dgRenderLowongan,
   '/informasi': dgRenderInformasi,
+  '/profil': dgRenderProfil,
   '/umkm': dgRenderUMKM,
+  '/berita': dgRenderBerita,
 };
 
 function dgCurrentPath() {

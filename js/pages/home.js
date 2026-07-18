@@ -45,7 +45,7 @@ async function dgRenderHome(container) {
           <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21c-4.97 0-9-4.03-9-9s4.03-9 9-9 9 4.03 9 9-4.03 9-9 9zM12 8v5l3 3"/></svg>
         </div>
         <h3 class="font-display font-bold text-lg text-emerald-950 mb-1">Informasi Desa</h3>
-        <p class="text-sm text-gray-600">Profil, data kependudukan, dan struktur perangkat Desa Glagah.</p>
+        <p class="text-sm text-gray-600">Letak geografis dan data kependudukan Desa Glagah.</p>
       </a>
       <a href="#/umkm" class="dg-card block rounded-xl border border-emerald-100 bg-white p-6 shadow-sm">
         <div class="h-10 w-10 rounded-lg bg-emerald-900 flex items-center justify-center mb-4">
@@ -55,11 +55,37 @@ async function dgRenderHome(container) {
         <p class="text-sm text-gray-600">Produk unggulan warga: kuliner, kerajinan, dan hasil pertanian.</p>
       </a>
     </section>
+
+    <section class="max-w-6xl mx-auto px-4 sm:px-6 pb-14">
+      <div class="flex items-center justify-between gap-4 mb-5">
+        <h2 class="font-display text-xl font-bold text-emerald-950">Berita Terkini</h2>
+        <a href="#/berita" class="text-sm font-semibold text-emerald-800 hover:text-amber-600 transition-colors shrink-0">
+          Lihat Semua Berita &rarr;
+        </a>
+      </div>
+      <div id="dg-berita-preview" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        ${Array.from({ length: 3 }).map(() => `<div class="dg-skeleton h-64 rounded-xl"></div>`).join('')}
+      </div>
+    </section>
   `;
 
   const form = container.querySelector('#dg-search-form');
   const input = container.querySelector('#dg-search-input');
   const results = container.querySelector('#dg-search-results');
+  const beritaPreview = container.querySelector('#dg-berita-preview');
+
+  dgLoadBerita().then((beritaList) => {
+    if (beritaList.length === 0) {
+      beritaPreview.innerHTML = `
+        <div class="col-span-full rounded-xl border border-dashed border-emerald-200 bg-emerald-50/60 p-8 text-center">
+          <p class="text-emerald-900 font-medium">Belum ada berita saat ini</p>
+        </div>`;
+      return;
+    }
+    const latest = beritaList.slice(0, 3);
+    beritaPreview.innerHTML = latest.map(dgBeritaCardHTML).join('');
+    dgBindBeritaCards(beritaPreview, latest);
+  });
 
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
@@ -70,15 +96,18 @@ async function dgRenderHome(container) {
     }
     results.innerHTML = `<div class="dg-skeleton h-24 rounded-xl my-6"></div>`;
 
-    const [jobs, umkm] = await Promise.all([dgLoadJobs(), dgLoadUMKM()]);
+    const [jobs, umkm, berita] = await Promise.all([dgLoadJobs(), dgLoadUMKM(), dgLoadBerita()]);
     const matchedJobs = jobs.filter((j) =>
       `${j.judul} ${j.usaha} ${j.lokasi} ${j.deskripsi}`.toLowerCase().includes(q)
     );
     const matchedUmkm = umkm.filter((u) =>
       `${u.nama} ${u.kategori} ${u.deskripsi}`.toLowerCase().includes(q)
     );
+    const matchedBerita = berita.filter((b) =>
+      `${b.judul} ${b.kategori} ${b.ringkasan}`.toLowerCase().includes(q)
+    );
 
-    if (matchedJobs.length === 0 && matchedUmkm.length === 0) {
+    if (matchedJobs.length === 0 && matchedUmkm.length === 0 && matchedBerita.length === 0) {
       results.innerHTML = `
         <div class="my-6 rounded-xl border border-dashed border-emerald-200 bg-emerald-50/60 p-6 text-center">
           <p class="text-emerald-900 font-medium">Tidak ada hasil untuk "${dgEscapeHTML(input.value)}"</p>
@@ -103,7 +132,18 @@ async function dgRenderHome(container) {
               ${matchedUmkm.map(dgUmkmCardHTML).join('')}
             </div>
           </div>` : ''}
+        ${matchedBerita.length ? `
+          <div>
+            <h2 class="font-display font-bold text-emerald-950 mb-3">Berita (${matchedBerita.length})</h2>
+            <div id="dg-search-berita-results" class="grid sm:grid-cols-3 gap-4">
+              ${matchedBerita.map(dgBeritaCardHTML).join('')}
+            </div>
+          </div>` : ''}
       </div>
     `;
+
+    if (matchedBerita.length) {
+      dgBindBeritaCards(results.querySelector('#dg-search-berita-results'), matchedBerita);
+    }
   });
 }

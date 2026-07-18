@@ -1,0 +1,98 @@
+// js/pages/profil.js
+
+const DG_VISI = 'Terwujudnya Desa Glagah yang Mandiri, Humanis, dan Berkelanjutan melalui Semangat Gotong Royong.';
+
+const DG_MISI = [
+  'Meningkatkan tata kelola pemerintahan desa yang transparan, akuntabel, dan partisipatif.',
+  'Mendorong pertumbuhan ekonomi desa melalui penguatan UMKM, pertanian, dan potensi lokal lainnya.',
+  'Meningkatkan kualitas pelayanan kesehatan, pendidikan, dan kesejahteraan sosial bagi seluruh warga.',
+  'Menjaga kelestarian lingkungan dan mengelola sumber daya alam secara berkelanjutan.',
+  'Memperkuat nilai gotong royong dan kearifan lokal dalam setiap aspek pembangunan desa.',
+];
+
+const DG_STRUKTUR = [
+  { jabatan: 'Kepala Desa', nama: 'Abdurrahman', foto: 'assets/perangkat/kepala-desa.jpg' },
+  { jabatan: 'Sekretaris Desa', nama: '-', foto: 'assets/perangkat/sekretaris-desa.jpg' },
+  { jabatan: 'Kepala Urusan Keuangan', nama: '-', foto: 'assets/perangkat/kaur-keuangan.jpg' },
+  { jabatan: 'Kepala Urusan Umum', nama: '-', foto: 'assets/perangkat/kaur-umum.jpg' },
+  { jabatan: 'Kepala Seksi Pemerintahan', nama: '-', foto: 'assets/perangkat/kasi-pemerintahan.jpg' },
+  { jabatan: 'Kepala Seksi Kesejahteraan', nama: '-', foto: 'assets/perangkat/kasi-kesejahteraan.jpg' },
+  { jabatan: 'Kepala Dusun Krajan', nama: '-', foto: 'assets/perangkat/kadus-krajan.jpg' },
+  { jabatan: 'Kepala Dusun Sumberejo', nama: '-', foto: 'assets/perangkat/kadus-sumberejo.jpg' },
+];
+
+function dgOfficialAvatarError(imgEl, initial, isKosong) {
+  const div = document.createElement('div');
+  div.className = `h-9 w-9 rounded-full flex items-center justify-center text-xs font-bold font-display shrink-0 ${
+    isKosong ? 'bg-gray-100 text-gray-400' : 'bg-emerald-900 text-amber-400'
+  }`;
+  div.textContent = initial;
+  imgEl.replaceWith(div);
+}
+
+async function dgRenderProfil(container) {
+  container.innerHTML = `
+    <section class="hero-photo-header">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 py-10">
+        <p class="dg-badge text-amber-400 mb-2">Tentang Desa</p>
+        <h1 class="font-display text-3xl sm:text-4xl font-extrabold text-white mb-2">Profil Desa Glagah</h1>
+        <p class="text-emerald-100 max-w-2xl text-sm sm:text-base">
+          Visi, misi, dan jajaran perangkat yang menjalankan pemerintahan Desa Glagah.
+        </p>
+      </div>
+    </section>
+
+    <section class="max-w-6xl mx-auto px-4 sm:px-6 py-10">
+      <h2 class="font-display text-xl font-bold text-emerald-950 mb-4">Visi</h2>
+      <div class="rounded-xl border-l-4 border-amber-500 bg-emerald-50/60 p-6 mb-12">
+        <p class="text-emerald-950 font-medium text-base sm:text-lg leading-relaxed">
+          &ldquo;${dgEscapeHTML(DG_VISI)}&rdquo;
+        </p>
+      </div>
+
+      <h2 class="font-display text-xl font-bold text-emerald-950 mb-4">Misi</h2>
+      <ol class="space-y-3 mb-12">
+        ${DG_MISI.map((m, i) => `
+          <li class="dg-card flex items-start gap-4 rounded-xl border border-emerald-100 bg-white p-4 shadow-sm">
+            <span class="shrink-0 h-8 w-8 rounded-full bg-emerald-900 text-amber-400 flex items-center justify-center text-sm font-bold font-display">${i + 1}</span>
+            <p class="text-sm sm:text-base text-gray-700 leading-relaxed pt-1">${dgEscapeHTML(m)}</p>
+          </li>
+        `).join('')}
+      </ol>
+
+      <h2 class="font-display text-xl font-bold text-emerald-950 mb-4">Struktur Perangkat Desa</h2>
+      <div class="rounded-xl border border-emerald-100 bg-white shadow-sm overflow-hidden">
+        <ul class="divide-y divide-emerald-50">
+          ${DG_STRUKTUR.map((s) => {
+            const isKosong = !s.nama || s.nama.trim() === '-';
+            const inisial = isKosong
+              ? '?'
+              : s.nama.trim().split(' ').map((n) => n[0]).slice(0, 2).join('');
+            const avatarFallback = `
+                <div class="h-9 w-9 rounded-full flex items-center justify-center text-xs font-bold font-display shrink-0 ${
+                  isKosong ? 'bg-gray-100 text-gray-400' : 'bg-emerald-900 text-amber-400'
+                }">
+                  ${dgEscapeHTML(inisial)}
+                </div>`;
+            const avatar = (s.foto && !isKosong)
+              ? `<img src="${dgEscapeHTML(s.foto)}" alt="Foto ${dgEscapeHTML(s.nama)}"
+                    class="h-9 w-9 rounded-full object-cover shrink-0 border border-emerald-100"
+                    onerror="dgOfficialAvatarError(this, '${dgEscapeHTML(inisial)}', ${isKosong})" />`
+              : avatarFallback;
+            return `
+            <li class="flex items-center justify-between gap-4 px-5 py-4">
+              <div class="flex items-center gap-3">
+                ${avatar}
+                <p class="font-medium text-sm ${isKosong ? 'text-gray-400 italic' : 'text-emerald-950'}">
+                  ${isKosong ? 'Belum terisi' : dgEscapeHTML(s.nama)}
+                </p>
+              </div>
+              <span class="dg-badge text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-full">${dgEscapeHTML(s.jabatan)}</span>
+            </li>
+          `;
+          }).join('')}
+        </ul>
+      </div>
+    </section>
+  `;
+}
