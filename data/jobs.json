@@ -1,0 +1,58 @@
+[
+  {
+    "id": "job-001",
+    "judul": "Kasir Toko Kelontong",
+    "usaha": "Toko Berkah Jaya",
+    "deskripsi": "Mencari kasir jujur dan teliti untuk menjaga toko kelontong di Dusun Krajan. Jam kerja shift pagi atau siang.",
+    "syarat": "Wanita/Pria usia 18-35 tahun, jujur, bisa menghitung dengan cepat, minimal lulusan SMP.",
+    "lokasi": "Dusun Krajan, Desa Glagah",
+    "tipe": "Paruh Waktu",
+    "whatsapp": "6281234567801",
+    "gaji": "Rp 700.000 - Rp 900.000 / bulan",
+    "batas": "2026-08-15",
+    "foto": null,
+    "createdAt": "2026-07-01T08:00:00.000Z"
+  },
+  {
+    "id": "job-002",
+    "judul": "Buruh Tani Musim Panen",
+    "usaha": "Kelompok Tani Sumber Makmur",
+    "deskripsi": "Dibutuhkan tenaga buruh tani untuk musim panen jagung dan tembakau. Kerja lapangan, upah harian dibayar tunai.",
+    "syarat": "Pria/Wanita, sehat jasmani, terbiasa bekerja di lahan pertanian.",
+    "lokasi": "Blok Sawah Utara, Desa Glagah",
+    "tipe": "Harian",
+    "whatsapp": "6281234567802",
+    "gaji": "Rp 60.000 - Rp 80.000 / hari",
+    "batas": "2026-08-01",
+    "foto": null,
+    "createdAt": "2026-07-05T09:30:00.000Z"
+  },
+  {
+    "id": "job-003",
+    "judul": "Admin Sosial Media UMKM",
+    "usaha": "Rumah Produksi Kripik Bu Sari",
+    "deskripsi": "Mengelola akun Instagram dan WhatsApp Business untuk promosi produk kripik pisang dan singkong. Bisa kerja dari rumah.",
+    "syarat": "Usia 17-25 tahun, bisa mengedit foto sederhana, memiliki HP Android dan kuota internet sendiri.",
+    "lokasi": "Dusun Sumberejo, Desa Glagah (bisa remote)",
+    "tipe": "Paruh Waktu",
+    "whatsapp": "6281234567803",
+    "gaji": "Rp 500.000 / bulan",
+    "batas": null,
+    "foto": null,
+    "createdAt": "2026-07-10T14:00:00.000Z"
+  },
+  {
+    "id": "job-004",
+    "judul": "Tukang Bangunan",
+    "usaha": "CV Karya Mandiri Probolinggo",
+    "deskripsi": "Proyek renovasi balai dusun membutuhkan tukang dan kenek bangunan berpengalaman selama 3 minggu ke depan.",
+    "syarat": "Pria, usia 20-45 tahun, pengalaman minimal 1 tahun, membawa peralatan dasar sendiri.",
+    "lokasi": "Balai Dusun Krajan, Desa Glagah",
+    "tipe": "Waktu Penuh",
+    "whatsapp": "6281234567804",
+    "gaji": "Rp 90.000 - Rp 120.000 / hari",
+    "batas": "2026-07-30",
+    "foto": null,
+    "createdAt": "2026-07-12T07:15:00.000Z"
+  }
+]

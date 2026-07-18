@@ -1,0 +1,62 @@
+[
+  {
+    "id": "umkm-001",
+    "nama": "Kripik Pisang Bu Sari",
+    "kategori": "Kuliner",
+    "deskripsi": "Kripik pisang renyah dengan varian rasa original, manis, dan pedas. Diproduksi rumahan tanpa bahan pengawet.",
+    "harga": "Rp 12.000 / bungkus",
+    "whatsapp": "6281234567803",
+    "lokasi": "Dusun Sumberejo",
+    "foto": null
+  },
+  {
+    "id": "umkm-002",
+    "nama": "Anyaman Bambu Pak Wito",
+    "kategori": "Kerajinan",
+    "deskripsi": "Kerajinan tangan berbahan bambu pilihan: tampah, besek, dan keranjang, dibuat langsung oleh pengrajin lokal.",
+    "harga": "Mulai Rp 25.000",
+    "whatsapp": "6281234567805",
+    "lokasi": "Dusun Krajan",
+    "foto": null
+  },
+  {
+    "id": "umkm-003",
+    "nama": "Madu Hutan Glagah",
+    "kategori": "Pertanian",
+    "deskripsi": "Madu murni hasil budidaya lebah warga sekitar hutan Pakuniran, dipanen dan dikemas secara higienis.",
+    "harga": "Rp 65.000 / 350ml",
+    "whatsapp": "6281234567806",
+    "lokasi": "Dusun Sumberejo",
+    "foto": null
+  },
+  {
+    "id": "umkm-004",
+    "nama": "Tempe Kedelai Mbah Karti",
+    "kategori": "Kuliner",
+    "deskripsi": "Tempe segar produksi harian dengan kedelai pilihan, cocok untuk kebutuhan rumah tangga maupun warung makan.",
+    "harga": "Rp 3.000 / bungkus",
+    "whatsapp": "6281234567807",
+    "lokasi": "Dusun Krajan",
+    "foto": null
+  },
+  {
+    "id": "umkm-005",
+    "nama": "Batik Tulis Glagah Asri",
+    "kategori": "Kerajinan",
+    "deskripsi": "Kain batik tulis motif khas Probolinggo, dikerjakan oleh kelompok ibu-ibu PKK Desa Glagah.",
+    "harga": "Mulai Rp 150.000",
+    "whatsapp": "6281234567808",
+    "lokasi": "Dusun Krajan",
+    "foto": null
+  },
+  {
+    "id": "umkm-006",
+    "nama": "Pupuk Kompos Tani Makmur",
+    "kategori": "Pertanian",
+    "deskripsi": "Pupuk kompos organik hasil olahan limbah pertanian dan kotoran ternak, ramah lingkungan dan menyuburkan tanah.",
+    "harga": "Rp 15.000 / karung",
+    "whatsapp": "6281234567809",
+    "lokasi": "Blok Sawah Utara",
+    "foto": null
+  }
+]

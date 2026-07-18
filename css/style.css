@@ -1,0 +1,108 @@
+/* Desa Glagah - custom styles layered on top of Tailwind CDN utilities */
+
+:root {
+  --dg-emerald-900: #064e3b;
+  --dg-emerald-800: #065f46;
+  --dg-emerald-700: #047857;
+  --dg-amber-600: #d97706;
+  --dg-amber-500: #f59e0b;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  color: #1f2937;
+}
+
+.font-display {
+  font-family: 'Poppins', 'Inter', system-ui, sans-serif;
+}
+
+/* Kawung-inspired batik watermark pattern used in the hero, evoking East Java
+   textile motifs without competing with the emerald/amber palette. */
+.hero-watermark {
+  background-color: var(--dg-emerald-900);
+  background-image:
+    radial-gradient(circle at 20% 20%, rgba(217, 119, 6, 0.10) 0, rgba(217, 119, 6, 0.10) 2px, transparent 2px),
+    radial-gradient(circle at 60% 60%, rgba(255, 255, 255, 0.06) 0, rgba(255, 255, 255, 0.06) 2px, transparent 2px);
+  background-size: 48px 48px, 64px 64px;
+  background-position: 0 0, 24px 24px;
+}
+
+.hero-watermark::before {
+  content: "";
+}
+
+/* Visible keyboard focus ring across the whole site, WCAG-friendly */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 3px solid var(--dg-amber-500);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Route sections: hidden by default, router toggles the active one */
+.dg-route {
+  display: none;
+}
+.dg-route.active {
+  display: block;
+}
+
+.dg-nav-link {
+  position: relative;
+}
+.dg-nav-link.active::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -6px;
+  height: 2px;
+  background-color: var(--dg-amber-500);
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  * {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+.dg-card {
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.dg-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px -10px rgba(6, 78, 59, 0.35);
+}
+
+.dg-badge {
+  font-size: 0.7rem;
+  letter-spacing: 0.04em;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+/* Simple skeleton loading state for async content */
+.dg-skeleton {
+  background: linear-gradient(90deg, #e5e7eb 25%, #f3f4f6 37%, #e5e7eb 63%);
+  background-size: 400% 100%;
+  animation: dg-shimmer 1.4s ease infinite;
+  border-radius: 0.5rem;
+}
+@keyframes dg-shimmer {
+  0% { background-position: 100% 50%; }
+  100% { background-position: 0 50%; }
+}

@@ -1,0 +1,31 @@
+# --- IDE (PyCharm / JetBrains) ---
+.idea/
+*.iml
+*.iws
+
+# --- OS files ---
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# --- Editor swap/backup files ---
+*.swp
+*.swo
+*~
+
+# --- Logs ---
+*.log
+npm-debug.log*
+
+# --- Node / tooling (in case Tailwind CLI or a dev server is added later) ---
+node_modules/
+package-lock.json
+dist/
+build/
+
+# --- Local env files ---
+.env
+.env.local
+
+# --- Local testing artifacts ---
+*.zip

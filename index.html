@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Desa Glagah — Kecamatan Pakuniran, Kabupaten Probolinggo</title>
+  <meta name="description" content="Website resmi Desa Glagah, Kecamatan Pakuniran, Kabupaten Probolinggo: lowongan pekerjaan, informasi desa, dan katalog UMKM." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            emerald: {
+              950: '#022c22',
+              900: '#064e3b',
+              800: '#065f46',
+              700: '#047857',
+            },
+          },
+        },
+      },
+    };
+  </script>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body class="bg-gray-50 text-gray-800 antialiased">
+
+  <a href="#dg-app-content" class="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[100] focus:bg-white focus:px-4 focus:py-2 focus:rounded-lg focus:shadow-lg">
+    Langsung ke konten
+  </a>
+
+  <header class="bg-emerald-900 sticky top-0 z-40 shadow-sm">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6">
+      <div class="flex items-center justify-between h-16">
+        <a href="#/" class="flex items-center gap-2.5 shrink-0">
+          <div class="h-9 w-9 rounded-full bg-amber-500 flex items-center justify-center font-display font-extrabold text-emerald-950 text-sm">
+            DG
+          </div>
+          <span class="font-display font-bold tracking-wide text-white text-sm sm:text-base">DESA GLAGAH</span>
+        </a>
+
+        <nav class="hidden md:flex items-center gap-8" aria-label="Navigasi utama">
+          <a href="#/lowongan" class="dg-nav-link text-sm font-semibold text-emerald-50 hover:text-amber-400 transition-colors tracking-wide">LOWONGAN PEKERJAAN</a>
+          <a href="#/informasi" class="dg-nav-link text-sm font-semibold text-emerald-50 hover:text-amber-400 transition-colors tracking-wide">INFORMASI DESA</a>
+          <a href="#/umkm" class="dg-nav-link text-sm font-semibold text-emerald-50 hover:text-amber-400 transition-colors tracking-wide">KATALOG UMKM</a>
+        </nav>
+
+        <button id="dg-mobile-menu-toggle" type="button" aria-label="Buka menu navigasi" aria-controls="dg-mobile-menu"
+          class="md:hidden text-emerald-50 p-2 -mr-2">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <nav id="dg-mobile-menu" class="hidden md:hidden border-t border-emerald-800 bg-emerald-900" aria-label="Navigasi mobile">
+      <div class="max-w-6xl mx-auto px-4 py-3 flex flex-col gap-1">
+        <a href="#/lowongan" class="dg-nav-link text-sm font-semibold text-emerald-50 py-2.5 tracking-wide">LOWONGAN PEKERJAAN</a>
+        <a href="#/informasi" class="dg-nav-link text-sm font-semibold text-emerald-50 py-2.5 tracking-wide">INFORMASI DESA</a>
+        <a href="#/umkm" class="dg-nav-link text-sm font-semibold text-emerald-50 py-2.5 tracking-wide">KATALOG UMKM</a>
+      </div>
+    </nav>
+  </header>
+
+  <main id="dg-app-content" role="main"></main>
+
+  <footer class="bg-emerald-950 mt-16">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 py-10 grid sm:grid-cols-3 gap-8 text-sm">
+      <div>
+        <div class="flex items-center gap-2.5 mb-3">
+          <div class="h-8 w-8 rounded-full bg-amber-500 flex items-center justify-center font-display font-extrabold text-emerald-950 text-xs">DG</div>
+          <span class="font-display font-bold text-white text-sm">DESA GLAGAH</span>
+        </div>
+        <p class="text-emerald-200/70 leading-relaxed">
+          Kecamatan Pakuniran, Kabupaten Probolinggo, Provinsi Jawa Timur.
+        </p>
+      </div>
+      <div>
+        <p class="font-display font-semibold text-white mb-3">Tautan</p>
+        <ul class="space-y-2 text-emerald-200/70">
+          <li><a href="#/lowongan" class="hover:text-amber-400 transition-colors">Lowongan Pekerjaan</a></li>
+          <li><a href="#/informasi" class="hover:text-amber-400 transition-colors">Informasi Desa</a></li>
+          <li><a href="#/umkm" class="hover:text-amber-400 transition-colors">Katalog UMKM</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="font-display font-semibold text-white mb-3">Kontak Kantor Desa</p>
+        <ul class="space-y-2 text-emerald-200/70">
+          <li>Kantor Desa Glagah, Kec. Pakuniran</li>
+          <li>Kabupaten Probolinggo, Jawa Timur</li>
+        </ul>
+      </div>
+    </div>
+    <div class="border-t border-emerald-900 py-5 text-center text-xs text-emerald-300/50">
+      &copy; 2026 Pemerintah Desa Glagah. Seluruh hak cipta dilindungi.
+    </div>
+  </footer>
+
+  <!-- Data + utility layer -->
+  <script src="js/data.js"></script>
+  <script src="js/whatsapp.js"></script>
+  <script src="js/render.js"></script>
+  <!-- Pages -->
+  <script src="js/pages/home.js"></script>
+  <script src="js/pages/lowongan.js"></script>
+  <script src="js/pages/informasi.js"></script>
+  <script src="js/pages/umkm.js"></script>
+  <!-- Router (must load last) -->
+  <script src="js/app.js"></script>
+</body>
+</html>
