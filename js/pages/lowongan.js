@@ -4,7 +4,7 @@ const DG_MAX_FILE_BYTES = 1 * 1024 * 1024; // 1MB
 
 async function dgRenderLowongan(container) {
   container.innerHTML = `
-    <section class="bg-emerald-900">
+    <section class="hero-photo-header">
       <div class="max-w-6xl mx-auto px-4 sm:px-6 py-10">
         <p class="dg-badge text-amber-400 mb-2">Papan Kerja Desa</p>
         <h1 class="font-display text-3xl sm:text-4xl font-extrabold text-white mb-2">Lowongan Pekerjaan</h1>

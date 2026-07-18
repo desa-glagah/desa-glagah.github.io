@@ -36,6 +36,19 @@ body {
   content: "";
 }
 
+/* Sub-page header with a custom village photo background. A layered
+   emerald gradient sits on top of the photo so white/amber text keeps
+   enough contrast (WCAG-friendly) regardless of the photo's content. */
+.hero-photo-header {
+  position: relative;
+  background-image:
+    linear-gradient(180deg, rgba(6, 78, 59, 0.88) 0%, rgba(6, 78, 59, 0.80) 55%, rgba(6, 78, 59, 0.92) 100%),
+    url('../assets/header_glagah.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
 /* Visible keyboard focus ring across the whole site, WCAG-friendly */
 a:focus-visible,
 button:focus-visible,

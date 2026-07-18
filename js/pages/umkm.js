@@ -2,7 +2,7 @@
 
 async function dgRenderUMKM(container) {
   container.innerHTML = `
-    <section class="bg-emerald-900">
+    <section class="hero-photo-header">
       <div class="max-w-6xl mx-auto px-4 sm:px-6 py-10">
         <p class="dg-badge text-amber-400 mb-2">Belanja Produk Warga</p>
         <h1 class="font-display text-3xl sm:text-4xl font-extrabold text-white mb-2">Katalog UMKM</h1>

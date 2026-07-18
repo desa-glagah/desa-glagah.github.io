@@ -1,7 +1,7 @@
 // js/pages/informasi.js
 
 const DG_STRUKTUR = [
-  { jabatan: 'Kepala Desa', nama: 'Pak Inggi' },
+  { jabatan: 'Kepala Desa', nama: 'PAK INGGI' },
   { jabatan: 'Sekretaris Desa', nama: '-' },
   { jabatan: 'Kepala Urusan Keuangan', nama: '-' },
   { jabatan: 'Kepala Urusan Umum', nama: '-' },
@@ -27,7 +27,7 @@ const DG_ICONS = {
 
 async function dgRenderInformasi(container) {
   container.innerHTML = `
-    <section class="bg-emerald-900">
+    <section class="hero-photo-header">
       <div class="max-w-6xl mx-auto px-4 sm:px-6 py-10">
         <p class="dg-badge text-amber-400 mb-2">Profil Wilayah</p>
         <h1 class="font-display text-3xl sm:text-4xl font-extrabold text-white mb-2">Informasi Desa Glagah</h1>
@@ -71,17 +71,27 @@ async function dgRenderInformasi(container) {
       <h2 class="font-display text-xl font-bold text-emerald-950 mb-4">Struktur Perangkat Desa</h2>
       <div class="rounded-xl border border-emerald-100 bg-white shadow-sm overflow-hidden">
         <ul class="divide-y divide-emerald-50">
-          ${DG_STRUKTUR.map((s) => `
+          ${DG_STRUKTUR.map((s) => {
+            const isKosong = !s.nama || s.nama.trim() === '-';
+            const inisial = isKosong
+              ? '?'
+              : s.nama.trim().split(' ').map((n) => n[0]).slice(0, 2).join('');
+            return `
             <li class="flex items-center justify-between gap-4 px-5 py-4">
               <div class="flex items-center gap-3">
-                <div class="h-9 w-9 rounded-full bg-emerald-900 text-amber-400 flex items-center justify-center text-xs font-bold font-display shrink-0">
-                  ${dgEscapeHTML(s.nama.split(' ').map((n) => n[0]).slice(0, 2).join(''))}
+                <div class="h-9 w-9 rounded-full flex items-center justify-center text-xs font-bold font-display shrink-0 ${
+                  isKosong ? 'bg-gray-100 text-gray-400' : 'bg-emerald-900 text-amber-400'
+                }">
+                  ${dgEscapeHTML(inisial)}
                 </div>
-                <p class="font-medium text-emerald-950 text-sm">${dgEscapeHTML(s.nama)}</p>
+                <p class="font-medium text-sm ${isKosong ? 'text-gray-400 italic' : 'text-emerald-950'}">
+                  ${isKosong ? 'Belum terisi' : dgEscapeHTML(s.nama)}
+                </p>
               </div>
               <span class="dg-badge text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-full">${dgEscapeHTML(s.jabatan)}</span>
             </li>
-          `).join('')}
+          `;
+          }).join('')}
         </ul>
       </div>
     </section>
