@@ -2,6 +2,11 @@
 
 const DG_MAX_FILE_BYTES = 1 * 1024 * 1024; // 1MB
 
+// WhatsApp number of the village admin who reviews and publishes new job
+// postings. Replace with the real number (format: 62xxxxxxxxxx, no "+" or
+// leading zero) before deploying to production.
+const DG_ADMIN_WHATSAPP = '62989898989';
+
 async function dgRenderLowongan(container) {
   container.innerHTML = `
     <section class="hero-photo-header">
@@ -39,9 +44,11 @@ async function dgRenderLowongan(container) {
           </button>
           <h2 class="font-display text-xl font-bold text-emerald-950 mb-1">Pasang Lowongan Baru</h2>
           <p class="text-sm text-gray-500 mb-5">
-            Lowongan Anda akan tersimpan sementara di perangkat ini dan ditandai
+            Setelah dikirim, WhatsApp akan otomatis terbuka berisi ringkasan
+            lowongan ke admin desa untuk verifikasi. Lowongan akan tampil di
+            daftar dengan label
             <span class="font-medium text-amber-600">"Menunggu Verifikasi Admin"</span>
-            sampai dimasukkan ke data resmi desa oleh pengelola website.
+            sampai resmi ditambahkan oleh pengelola website.
           </p>
 
           <form id="dg-job-form" class="space-y-4" novalidate>
@@ -103,7 +110,8 @@ async function dgRenderLowongan(container) {
             </div>
 
             <button type="submit"
-              class="w-full mt-2 bg-[#0f6c5f] hover:bg-emerald-800 text-white font-semibold text-sm py-3 rounded-lg transition-colors">
+              class="w-full mt-2 inline-flex items-center justify-center gap-2 bg-[#0f6c5f] hover:bg-emerald-800 text-white font-semibold text-sm py-3 rounded-lg transition-colors">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M12.04 2c-5.52 0-10 4.48-10 10 0 1.76.46 3.48 1.34 5L2 22l5.14-1.35a10 10 0 004.9 1.25h.01c5.52 0 10-4.48 10-10s-4.48-10-10-10zm0 18.15h-.01a8.16 8.16 0 01-4.16-1.14l-.3-.18-3.05.8.82-2.97-.2-.31a8.15 8.15 0 01-1.25-4.35c0-4.5 3.66-8.16 8.16-8.16a8.1 8.1 0 015.77 2.39 8.1 8.1 0 012.39 5.77c0 4.5-3.67 8.16-8.17 8.16zm4.47-6.12c-.24-.12-1.45-.72-1.68-.8-.22-.08-.39-.12-.55.12-.16.24-.63.8-.78.96-.14.16-.29.18-.53.06-.24-.12-1.03-.38-1.96-1.21-.72-.65-1.21-1.44-1.35-1.68-.14-.24-.02-.37.11-.49.11-.11.24-.29.36-.43.12-.14.16-.24.24-.4.08-.16.04-.31-.02-.43-.06-.12-.55-1.32-.75-1.81-.2-.48-.4-.41-.55-.42h-.47c-.16 0-.43.06-.65.31-.22.24-.86.84-.86 2.04 0 1.2.88 2.36 1 2.52.12.16 1.73 2.64 4.2 3.7.59.25 1.05.4 1.41.52.59.19 1.13.16 1.56.1.48-.07 1.45-.59 1.65-1.16.2-.57.2-1.06.14-1.16-.06-.1-.22-.16-.46-.28z"/></svg>
               Kirim Lowongan
             </button>
           </form>
@@ -175,11 +183,34 @@ async function dgRenderLowongan(container) {
     closeModal();
     form.reset();
     fotoDataUrl = null;
-    dgToast('Lowongan berhasil dikirim dan menunggu verifikasi admin.');
+    dgToast('Lowongan berhasil dikirim. Membuka WhatsApp untuk konfirmasi ke admin...');
     dgRefreshJobList(container);
+    dgNotifyAdmin(job);
   });
 
   await dgRefreshJobList(container);
+}
+
+function dgNotifyAdmin(job) {
+  const batas = dgFormatDate(job.batas);
+  const lines = [
+    'Halo Admin, ada lowongan baru menunggu verifikasi di website Desa Glagah:',
+    '',
+    `Judul: ${job.judul}`,
+    `Usaha/Pemberi Kerja: ${job.usaha}`,
+    `Deskripsi: ${job.deskripsi}`,
+    `Syarat: ${job.syarat}`,
+    `Lokasi: ${job.lokasi}`,
+    `Tipe Kerja: ${job.tipe}`,
+    `Gaji: ${job.gaji || '-'}`,
+    `Batas Lamaran: ${batas || '-'}`,
+    `Kontak WhatsApp Pemberi Kerja: ${job.whatsapp}`,
+    job.foto ? 'Foto: dilampirkan (lihat di daftar lowongan situs)' : 'Foto: -',
+    '',
+    'Mohon ditinjau lalu ditambahkan ke data/jobs.json jika sudah sesuai.',
+  ];
+  const waLink = dgBuildWhatsAppLink(DG_ADMIN_WHATSAPP, lines.join('\n'));
+  window.open(waLink, '_blank', 'noopener,noreferrer');
 }
 
 async function dgRefreshJobList(container) {
