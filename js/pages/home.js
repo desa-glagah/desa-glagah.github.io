@@ -2,7 +2,7 @@
 
 async function dgRenderHome(container) {
   container.innerHTML = `
-    <section class="hero-watermark relative overflow-hidden">
+    <section class="hero-photo-main relative overflow-hidden">
       <div class="max-w-6xl mx-auto px-4 sm:px-6 py-16 sm:py-24 relative z-10">
         <p class="dg-badge text-amber-400 mb-3">Kecamatan Pakuniran &middot; Kabupaten Probolinggo</p>
         <h1 class="font-display text-5xl sm:text-7xl font-extrabold tracking-tight text-white mb-4">GLAGAH</h1>

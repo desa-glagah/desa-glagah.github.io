@@ -36,6 +36,30 @@ body {
   content: "";
 }
 
+/* Main homepage hero: the village photo sits underneath, a lighter emerald
+   gradient keeps the white/amber text readable, and the same kawung-style
+   dot pattern from .hero-watermark is layered on top for texture and to
+   tie the main hero back to the sub-page headers. */
+.hero-photo-main {
+  position: relative;
+  background-image:
+    radial-gradient(circle at 20% 20%, rgba(217, 119, 6, 0.12) 0, rgba(217, 119, 6, 0.12) 2px, transparent 2px),
+    radial-gradient(circle at 60% 60%, rgba(255, 255, 255, 0.08) 0, rgba(255, 255, 255, 0.08) 2px, transparent 2px),
+    linear-gradient(180deg, rgba(6, 78, 59, 0.42) 0%, rgba(6, 78, 59, 0.30) 45%, rgba(6, 78, 59, 0.62) 100%),
+    url('../assets/header_glagah.jpg');
+  background-size: 48px 48px, 64px 64px, cover, cover;
+  background-position: 0 0, 24px 24px, center, center;
+  background-repeat: repeat, repeat, no-repeat, no-repeat;
+}
+
+/* Overlay alone is lighter now to let the photo read clearly, so give the
+   headline and slogan their own shadow as a readability safety net
+   regardless of what part of the photo sits behind them. */
+.hero-photo-main h1,
+.hero-photo-main p {
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.45);
+}
+
 /* Sub-page header with a custom village photo background. A layered
    emerald gradient sits on top of the photo so white/amber text keeps
    enough contrast (WCAG-friendly) regardless of the photo's content. */
