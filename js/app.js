@@ -20,17 +20,22 @@ function dgCurrentPath() {
 
 async function dgRoute() {
   const path = dgCurrentPath();
-  const renderFn = DG_ROUTES[path] || DG_ROUTES['/'];
   const outlet = document.getElementById('dg-app-content');
+
+  // Dynamic route: an individual news article page, e.g. #/berita/berita-001
+  const beritaMatch = path.match(/^\/berita\/(.+)$/);
+  const renderFn = beritaMatch ? dgRenderBeritaDetail : (DG_ROUTES[path] || DG_ROUTES['/']);
+  const renderArg = beritaMatch ? decodeURIComponent(beritaMatch[1]) : undefined;
 
   document.querySelectorAll('.dg-nav-link').forEach((link) => {
     const linkPath = link.getAttribute('href').replace(/^#/, '');
-    link.classList.toggle('active', linkPath === path);
+    const isActive = linkPath === path || (linkPath !== '/' && path.startsWith(`${linkPath}/`));
+    link.classList.toggle('active', isActive);
   });
 
   outlet.setAttribute('aria-busy', 'true');
   try {
-    await renderFn(outlet);
+    await renderFn(outlet, renderArg);
   } catch (err) {
     console.error('Gagal merender halaman:', err);
     outlet.innerHTML = `

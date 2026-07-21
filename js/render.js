@@ -86,13 +86,35 @@ const DG_BERITA_KATEGORI_STYLES = {
   Lingkungan: 'bg-teal-100 text-teal-800',
 };
 
+const DG_BERITA_PLACEHOLDER_ICON = `
+  <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10l6 6v10a2 2 0 01-2 2z"/><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6M9 16h6M9 8h2"/></svg>
+`;
+
+function dgBeritaThumbError(imgEl, sizeClass) {
+  const wrapper = imgEl.parentElement;
+  wrapper.innerHTML = '';
+  const div = document.createElement('div');
+  div.className = `${sizeClass} w-full bg-emerald-50 flex items-center justify-center text-emerald-300`;
+  div.innerHTML = DG_BERITA_PLACEHOLDER_ICON;
+  wrapper.appendChild(div);
+}
+
+function dgBeritaThumbHTML(berita, sizeClass) {
+  if (berita.foto) {
+    return `<img src="${dgEscapeHTML(berita.foto)}" alt="${dgEscapeHTML(berita.judul)}"
+              class="${sizeClass} w-full object-cover"
+              onerror="dgBeritaThumbError(this, '${sizeClass}')" />`;
+  }
+  return `<div class="${sizeClass} w-full bg-emerald-50 flex items-center justify-center text-emerald-300">${DG_BERITA_PLACEHOLDER_ICON}</div>`;
+}
+
 function dgBeritaCardHTML(berita) {
   const tanggal = dgFormatDate(berita.tanggal);
   const kategoriStyle = DG_BERITA_KATEGORI_STYLES[berita.kategori] || 'bg-gray-100 text-gray-700';
   return `
-    <article class="dg-card rounded-xl border border-emerald-100 bg-white overflow-hidden shadow-sm flex flex-col cursor-pointer" data-berita-id="${dgEscapeHTML(berita.id)}">
-      <div class="h-36 bg-emerald-50 flex items-center justify-center text-emerald-300">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10l6 6v10a2 2 0 01-2 2z"/><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6M9 16h6M9 8h2"/></svg>
+    <a href="#/berita/${encodeURIComponent(berita.id)}" class="dg-card block rounded-xl border border-emerald-100 bg-white overflow-hidden shadow-sm flex flex-col">
+      <div class="overflow-hidden">
+        ${dgBeritaThumbHTML(berita, 'h-36')}
       </div>
       <div class="p-4 flex flex-col flex-1">
         <div class="flex items-center gap-2 mb-2">
@@ -103,55 +125,7 @@ function dgBeritaCardHTML(berita) {
         <p class="text-sm text-gray-600 line-clamp-3 mb-3">${dgEscapeHTML(berita.ringkasan)}</p>
         <p class="mt-auto text-sm font-semibold text-emerald-800">Baca selengkapnya &rarr;</p>
       </div>
-    </article>
+    </a>
   `;
 }
 
-/**
- * Wires up click handlers on any [data-berita-id] card inside `root` so it
- * opens a shared read-more modal. `beritaList` must contain the full items
- * (with `konten`) matching the ids rendered in `root`.
- */
-function dgBindBeritaCards(root, beritaList) {
-  root.querySelectorAll('[data-berita-id]').forEach((card) => {
-    card.addEventListener('click', () => {
-      const item = beritaList.find((b) => b.id === card.dataset.beritaId);
-      if (item) dgOpenBeritaModal(item);
-    });
-  });
-}
-
-function dgOpenBeritaModal(berita) {
-  const tanggal = dgFormatDate(berita.tanggal);
-  const existing = document.getElementById('dg-berita-modal');
-  if (existing) existing.remove();
-
-  const modal = document.createElement('div');
-  modal.id = 'dg-berita-modal';
-  modal.className = 'fixed inset-0 z-50';
-  modal.innerHTML = `
-    <div class="absolute inset-0 bg-emerald-950/60" data-close-berita-modal></div>
-    <div class="absolute inset-x-0 bottom-0 sm:inset-0 sm:flex sm:items-center sm:justify-center">
-      <div class="bg-white w-full sm:max-w-2xl sm:rounded-2xl rounded-t-2xl max-h-[90vh] overflow-y-auto p-6 sm:p-8 relative">
-        <button type="button" data-close-berita-modal aria-label="Tutup berita"
-          class="absolute top-4 right-4 text-gray-400 hover:text-gray-700">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
-        </button>
-        <div class="flex items-center gap-2 mb-3">
-          <span class="dg-badge rounded-full px-2.5 py-1 ${DG_BERITA_KATEGORI_STYLES[berita.kategori] || 'bg-gray-100 text-gray-700'}">${dgEscapeHTML(berita.kategori)}</span>
-          ${tanggal ? `<span class="text-xs text-gray-400">${tanggal}</span>` : ''}
-        </div>
-        <h2 class="font-display text-2xl font-bold text-emerald-950 mb-4 leading-snug">${dgEscapeHTML(berita.judul)}</h2>
-        <p class="text-sm text-gray-600 leading-relaxed whitespace-pre-line">${dgEscapeHTML(berita.konten)}</p>
-      </div>
-    </div>
-  `;
-  document.body.appendChild(modal);
-  document.body.style.overflow = 'hidden';
-
-  const close = () => {
-    modal.remove();
-    document.body.style.overflow = '';
-  };
-  modal.querySelectorAll('[data-close-berita-modal]').forEach((el) => el.addEventListener('click', close));
-}

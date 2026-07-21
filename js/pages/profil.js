@@ -11,14 +11,19 @@ const DG_MISI = [
 ];
 
 const DG_STRUKTUR = [
-  { jabatan: 'Kepala Desa', nama: 'Abdurrahman', foto: 'assets/perangkat/kepala-desa.jpg' },
-  { jabatan: 'Sekretaris Desa', nama: '-', foto: 'assets/perangkat/sekretaris-desa.jpg' },
-  { jabatan: 'Kepala Urusan Keuangan', nama: '-', foto: 'assets/perangkat/kaur-keuangan.jpg' },
-  { jabatan: 'Kepala Urusan Umum', nama: '-', foto: 'assets/perangkat/kaur-umum.jpg' },
-  { jabatan: 'Kepala Seksi Pemerintahan', nama: '-', foto: 'assets/perangkat/kasi-pemerintahan.jpg' },
-  { jabatan: 'Kepala Seksi Kesejahteraan', nama: '-', foto: 'assets/perangkat/kasi-kesejahteraan.jpg' },
-  { jabatan: 'Kepala Dusun Krajan', nama: '-', foto: 'assets/perangkat/kadus-krajan.jpg' },
-  { jabatan: 'Kepala Dusun Sumberejo', nama: '-', foto: 'assets/perangkat/kadus-sumberejo.jpg' },
+  { jabatan: 'Kepala Desa', nama: 'Abdurrahman', foto: 'assets/perangkat/abdurrahman_kepala desa.jpeg' },
+  { jabatan: 'Sekretaris Desa', nama: 'Peni Aripin', foto: 'assets/perangkat/peni aripin_sekertaris desa.jpeg' },
+  { jabatan: 'Kepala Urusan Keuangan', nama: 'Gita Ratnasari', foto: 'assets/perangkat/gita ratnasari_kepala urusan_keuangan.jpeg' },
+  { jabatan: 'Kepala Urusan Umum', nama: 'Misnari', foto: 'assets/perangkat/misnari_kepala urusan_umum.jpeg' },
+  { jabatan: 'Kepala Urusan Perencanaan', nama: 'Lin Qomariyah', foto: 'assets/perangkat/lin qomariyah_kepala urusan_perencanaan.jpeg' },
+  { jabatan: 'Kepala Urusan Krajan', nama: 'Mulyadi', foto: 'assets/perangkat/mulyadi_kepala urusan_krajan.jpeg' },
+  { jabatan: 'Kepala Seksi Kesejahteraan', nama: 'Nurul Hasan', foto: 'assets/perangkat/nurul hasan_kepala seksi_kesejahteraan.jpeg' },
+  { jabatan: 'Kepala Seksi Pelayanan', nama: 'Rudy Hartono', foto: 'assets/perangkat/rudy hartono_kepala seksi_pelayanan.jpeg' },
+  { jabatan: 'Kepala Dusun Nyanto 1', nama: 'Abd Gani', foto: 'assets/perangkat/abd gani_kepala dusun_nyanto.jpeg' },
+  { jabatan: 'Kepala Dusun Nyanto 2', nama: 'Suli', foto: 'assets/perangkat/suli_kepala dusun_nyanto_2.jpeg' },
+  { jabatan: 'Kepala Dusun Bukolan 1', nama: 'Patro', foto: 'assets/perangkat/patro_kepala dusun_bukolan_1.jpeg' },
+  { jabatan: 'Kepala Dusun Bukolan 2', nama: 'Buradi Suharji', foto: 'assets/perangkat/buradi suharji_kepala dusun_bukolan_2.jpeg' },
+  { jabatan: 'Staff', nama: 'Nasidah', foto: 'assets/perangkat/nasidah_staff.jpeg' },
 ];
 
 function dgOfficialAvatarError(imgEl, initial, isKosong) {

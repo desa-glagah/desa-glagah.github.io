@@ -84,7 +84,6 @@ async function dgRenderHome(container) {
     }
     const latest = beritaList.slice(0, 3);
     beritaPreview.innerHTML = latest.map(dgBeritaCardHTML).join('');
-    dgBindBeritaCards(beritaPreview, latest);
   });
 
   form.addEventListener('submit', async (e) => {
@@ -135,15 +134,11 @@ async function dgRenderHome(container) {
         ${matchedBerita.length ? `
           <div>
             <h2 class="font-display font-bold text-emerald-950 mb-3">Berita (${matchedBerita.length})</h2>
-            <div id="dg-search-berita-results" class="grid sm:grid-cols-3 gap-4">
+            <div class="grid sm:grid-cols-3 gap-4">
               ${matchedBerita.map(dgBeritaCardHTML).join('')}
             </div>
           </div>` : ''}
       </div>
     `;
-
-    if (matchedBerita.length) {
-      dgBindBeritaCards(results.querySelector('#dg-search-berita-results'), matchedBerita);
-    }
   });
 }

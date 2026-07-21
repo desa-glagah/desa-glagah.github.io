@@ -13,7 +13,7 @@ desa-glagah/
 ├── css/
 │   └── style.css           # Watermark hero, fokus keyboard, kartu, dsb.
 ├── js/
-│   ├── app.js               # Router hash (#/lowongan, #/informasi, #/profil, #/umkm, #/berita)
+│   ├── app.js               # Router hash (#/lowongan, #/informasi, #/profil, #/umkm, #/berita, #/berita/:id)
 │   ├── data.js               # Ambil data JSON + localStorage untuk lowongan baru
 │   ├── whatsapp.js            # Sanitasi nomor & pembuat link wa.me
 │   ├── render.js               # Komponen kartu lowongan, UMKM, berita (dipakai bersama)
@@ -23,7 +23,7 @@ desa-glagah/
 │       ├── informasi.js           # Letak geografis + data kependudukan
 │       ├── profil.js               # Visi & misi + struktur perangkat desa
 │       ├── umkm.js                  # Katalog UMKM + filter kategori
-│       └── berita.js                 # Daftar berita desa + filter kategori + modal baca
+│       └── berita.js                 # Daftar berita (filter kategori) + halaman detail per berita (#/berita/:id)
 ├── data/
 │   ├── jobs.json             # Data lowongan (sumber kebenaran)
 │   ├── umkm.json              # Data produk UMKM (sumber kebenaran)
@@ -90,30 +90,37 @@ Nomor WhatsApp pada `data/jobs.json` dan `data/umkm.json` memakai data contoh
 publikasi. Format yang diterima: diawali `0` (mis. `0812xxxx`, otomatis
 dikonversi ke `62`) atau langsung `62812xxxx`.
 
-## Menambahkan Foto Perangkat Desa
+## Foto Perangkat Desa
 
 Foto perangkat desa diatur di `js/pages/profil.js`, pada array `DG_STRUKTUR`.
-Setiap jabatan **sudah punya path foto siap pakai** — kamu tinggal
-menyimpan file foto dengan nama yang sesuai ke folder `assets/perangkat/`,
-tidak perlu mengedit kode sama sekali:
+Data saat ini sudah diisi dengan 13 perangkat beserta foto masing-masing di
+`assets/perangkat/`:
 
-| Jabatan | Path yang harus diisi |
-|---|---|
-| Kepala Desa | `assets/perangkat/kepala-desa.jpg` |
-| Sekretaris Desa | `assets/perangkat/sekretaris-desa.jpg` |
-| Kepala Urusan Keuangan | `assets/perangkat/kaur-keuangan.jpg` |
-| Kepala Urusan Umum | `assets/perangkat/kaur-umum.jpg` |
-| Kepala Seksi Pemerintahan | `assets/perangkat/kasi-pemerintahan.jpg` |
-| Kepala Seksi Kesejahteraan | `assets/perangkat/kasi-kesejahteraan.jpg` |
-| Kepala Dusun Krajan | `assets/perangkat/kadus-krajan.jpg` |
-| Kepala Dusun Sumberejo | `assets/perangkat/kadus-sumberejo.jpg` |
+| Jabatan | Nama | File Foto |
+|---|---|---|
+| Kepala Desa | Abdurrahman | `abdurrahman_kepala desa.jpeg` |
+| Sekretaris Desa | Peni Aripin | `peni aripin_sekertaris desa.jpeg` |
+| Kepala Urusan Keuangan | Gita Ratnasari | `gita ratnasari_kepala urusan_keuangan.jpeg` |
+| Kepala Urusan Umum | Misnari | `misnari_kepala urusan_umum.jpeg` |
+| Kepala Urusan Perencanaan | Lin Qomariyah | `lin qomariyah_kepala urusan_perencanaan.jpeg` |
+| Kepala Urusan Krajan | Mulyadi | `mulyadi_kepala urusan_krajan.jpeg` |
+| Kepala Seksi Kesejahteraan | Nurul Hasan | `nurul hasan_kepala seksi_kesejahteraan.jpeg` |
+| Kepala Seksi Pelayanan | Rudy Hartono | `rudy hartono_kepala seksi_pelayanan.jpeg` |
+| Kepala Dusun Nyanto 1 | Abd Gani | `abd gani_kepala dusun_nyanto.jpeg` |
+| Kepala Dusun Nyanto 2 | Suli | `suli_kepala dusun_nyanto_2.jpeg` |
+| Kepala Dusun Bukolan 1 | Patro | `patro_kepala dusun_bukolan_1.jpeg` |
+| Kepala Dusun Bukolan 2 | Buradi Suharji | `buradi suharji_kepala dusun_bukolan_2.jpeg` |
+| Staff | Nasidah | `nasidah_staff.jpeg` |
 
-**Catatan:** foto baru akan tampil untuk jabatan yang `nama`-nya sudah diisi
-(bukan `-`). Kalau nama masih `-` ("Belum terisi"), situs sengaja
-menampilkan avatar placeholder walau file foto sudah ada di folder — supaya
-tidak menampilkan foto orang di jabatan yang belum resmi terisi. Jadi urutan
-kerjanya: isi `nama` di `DG_STRUKTUR` dulu, lalu taruh foto dengan nama file
-sesuai tabel di atas, foto akan otomatis muncul.
+Semua path menunjuk ke file asli persis seperti yang tersimpan di
+`assets/perangkat/` (nama file mengandung spasi dan huruf kecil apa adanya —
+biarkan seperti itu, jangan diubah, karena GitHub Pages **case-sensitive**
+terhadap nama file, beda dengan Windows yang tidak membedakan huruf besar/kecil).
+
+Untuk menambah atau mengganti perangkat di kemudian hari, cukup edit array
+`DG_STRUKTUR` di `js/pages/profil.js` — tambah/ubah objek `{ jabatan, nama, foto }`
+lalu simpan file fotonya di `assets/perangkat/` dengan nama yang sama persis
+dengan nilai `foto`.
 
 Tidak perlu foto dengan ukuran/rasio persis sama — foto akan otomatis
 dipotong jadi bulat (`object-cover`). Disarankan foto persegi (mis. 400x400px)
@@ -140,3 +147,10 @@ Berita Desa maupun di preview "Berita Terkini" pada halaman utama (3 berita
 terbaru). Kategori pada badge kartu mengikuti daftar warna di
 `DG_BERITA_KATEGORI_STYLES` (`js/render.js`) — kategori baru di luar daftar
 itu akan tetap tampil dengan warna abu-abu netral.
+
+Setiap berita punya halaman sendiri di `#/berita/<id>` (contoh:
+`#/berita/berita-001`), menampilkan foto utama diikuti isi berita lengkap.
+Kalau field `foto` diisi dengan path gambar (mis.
+`"foto": "assets/berita/musyawarah-jalan.jpg"`), foto itu yang dipakai
+sebagai foto utama; kalau `foto: null`, halaman otomatis menampilkan ikon
+placeholder alih-alih foto rusak.
