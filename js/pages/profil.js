@@ -15,7 +15,7 @@ const DG_STRUKTUR = [
   { jabatan: 'Sekretaris Desa', nama: 'Peni Aripin', foto: 'assets/perangkat/peni aripin_sekertaris desa.jpeg' },
   { jabatan: 'Kepala Urusan Keuangan', nama: 'Gita Ratnasari', foto: 'assets/perangkat/gita ratnasari_kepala urusan_keuangan.jpeg' },
   { jabatan: 'Kepala Urusan Umum', nama: 'Misnari', foto: 'assets/perangkat/misnari_kepala urusan_umum.jpeg' },
-  { jabatan: 'Kepala Urusan Perencanaan', nama: 'Lin Qomariyah', foto: 'assets/perangkat/lin qomariyah_kepala urusan_perencanaan.jpeg' },
+  { jabatan: 'Kepala Urusan Perencanaan', nama: 'Lin Qomariyah', foto: 'assets/perangkat/lin qomariyah_kepala urusan perencanaan.jpeg' },
   { jabatan: 'Kepala Urusan Krajan', nama: 'Mulyadi', foto: 'assets/perangkat/mulyadi_kepala urusan_krajan.jpeg' },
   { jabatan: 'Kepala Seksi Kesejahteraan', nama: 'Nurul Hasan', foto: 'assets/perangkat/nurul hasan_kepala seksi_kesejahteraan.jpeg' },
   { jabatan: 'Kepala Seksi Pelayanan', nama: 'Rudy Hartono', foto: 'assets/perangkat/rudy hartono_kepala seksi_pelayanan.jpeg' },
