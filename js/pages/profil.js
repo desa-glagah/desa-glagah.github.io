@@ -27,12 +27,14 @@ const DG_STRUKTUR = [
 ];
 
 function dgOfficialAvatarError(imgEl, initial, isKosong) {
+  const wrapper = imgEl.parentElement;
+  wrapper.innerHTML = '';
   const div = document.createElement('div');
-  div.className = `h-9 w-9 rounded-full flex items-center justify-center text-xs font-bold font-display shrink-0 ${
-    isKosong ? 'bg-gray-100 text-gray-400' : 'bg-emerald-900 text-amber-400'
+  div.className = `aspect-square w-full flex items-center justify-center text-3xl font-bold font-display ${
+    isKosong ? 'bg-gray-100 text-gray-300' : 'bg-emerald-900 text-amber-400'
   }`;
   div.textContent = initial;
-  imgEl.replaceWith(div);
+  wrapper.appendChild(div);
 }
 
 async function dgRenderProfil(container) {
@@ -66,37 +68,35 @@ async function dgRenderProfil(container) {
       </ol>
 
       <h2 class="font-display text-xl font-bold text-emerald-950 mb-4">Struktur Perangkat Desa</h2>
-      <div class="rounded-xl border border-emerald-100 bg-white shadow-sm overflow-hidden">
-        <ul class="divide-y divide-emerald-50">
-          ${DG_STRUKTUR.map((s) => {
-            const isKosong = !s.nama || s.nama.trim() === '-';
-            const inisial = isKosong
-              ? '?'
-              : s.nama.trim().split(' ').map((n) => n[0]).slice(0, 2).join('');
-            const avatarFallback = `
-                <div class="h-9 w-9 rounded-full flex items-center justify-center text-xs font-bold font-display shrink-0 ${
-                  isKosong ? 'bg-gray-100 text-gray-400' : 'bg-emerald-900 text-amber-400'
-                }">
-                  ${dgEscapeHTML(inisial)}
-                </div>`;
-            const avatar = (s.foto && !isKosong)
-              ? `<img src="${dgEscapeHTML(s.foto)}" alt="Foto ${dgEscapeHTML(s.nama)}"
-                    class="h-9 w-9 rounded-full object-cover shrink-0 border border-emerald-100"
-                    onerror="dgOfficialAvatarError(this, '${dgEscapeHTML(inisial)}', ${isKosong})" />`
-              : avatarFallback;
-            return `
-            <li class="flex items-center justify-between gap-4 px-5 py-4">
-              <div class="flex items-center gap-3">
-                ${avatar}
-                <p class="font-medium text-sm ${isKosong ? 'text-gray-400 italic' : 'text-emerald-950'}">
+      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-5">
+        ${DG_STRUKTUR.map((s) => {
+          const isKosong = !s.nama || s.nama.trim() === '-';
+          const inisial = isKosong
+            ? '?'
+            : s.nama.trim().split(' ').map((n) => n[0]).slice(0, 2).join('');
+          const fotoFallback = `
+            <div class="aspect-square w-full flex items-center justify-center text-3xl font-bold font-display ${
+              isKosong ? 'bg-gray-100 text-gray-300' : 'bg-emerald-900 text-amber-400'
+            }">
+              ${dgEscapeHTML(inisial)}
+            </div>`;
+          const foto = (s.foto && !isKosong)
+            ? `<img src="${dgEscapeHTML(s.foto)}" alt="Foto ${dgEscapeHTML(s.nama)}"
+                  class="aspect-square w-full object-cover"
+                  onerror="dgOfficialAvatarError(this, '${dgEscapeHTML(inisial)}', ${isKosong})" />`
+            : fotoFallback;
+          return `
+            <div class="dg-card rounded-xl border border-emerald-100 bg-white shadow-sm overflow-hidden flex flex-col">
+              <div class="overflow-hidden">${foto}</div>
+              <div class="p-3 sm:p-4 text-center">
+                <p class="font-display font-bold text-sm sm:text-base ${isKosong ? 'text-gray-400 italic' : 'text-emerald-950'}">
                   ${isKosong ? 'Belum terisi' : dgEscapeHTML(s.nama)}
                 </p>
+                <p class="mt-1.5 dg-badge inline-block text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-full">${dgEscapeHTML(s.jabatan)}</p>
               </div>
-              <span class="dg-badge text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-full">${dgEscapeHTML(s.jabatan)}</span>
-            </li>
+            </div>
           `;
-          }).join('')}
-        </ul>
+        }).join('')}
       </div>
     </section>
   `;
