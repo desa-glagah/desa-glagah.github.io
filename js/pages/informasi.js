@@ -3,8 +3,8 @@
 const DG_DEMOGRAFI = [
   { label: 'Total Penduduk', value: '4.512 jiwa', icon: 'users' },
   { label: 'Kepala Keluarga', value: '1.714 KK', icon: 'home' },
-  { label: 'Mata Pencaharian Utama', value: 'Petani & Buruh Tani', icon: 'sprout' },
-  { label: 'Luas Wilayah', value: '± 4,2 km²', icon: 'map' },
+  { label: 'Mata Pencaharian Utama', value: 'Petani & Peternak', icon: 'sprout' },
+  { label: 'Luas Wilayah', value: '± 3,30 km²', icon: 'map' },
 ];
 
 const DG_JENIS_KELAMIN = [
