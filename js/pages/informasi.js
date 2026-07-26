@@ -1,10 +1,20 @@
 // js/pages/informasi.js
 
 const DG_DEMOGRAFI = [
-  { label: 'Total Penduduk', value: '3.482 jiwa', icon: 'users' },
-  { label: 'Kepala Keluarga', value: '1.024 KK', icon: 'home' },
+  { label: 'Total Penduduk', value: '4.512 jiwa', icon: 'users' },
+  { label: 'Kepala Keluarga', value: '1.714 KK', icon: 'home' },
   { label: 'Mata Pencaharian Utama', value: 'Petani & Buruh Tani', icon: 'sprout' },
   { label: 'Luas Wilayah', value: '± 4,2 km²', icon: 'map' },
+];
+
+const DG_JENIS_KELAMIN = [
+  { label: 'Laki-Laki', value: '2.212', color: 'bg-teal-600' },
+  { label: 'Perempuan', value: '2.300', color: 'bg-rose-500' },
+];
+
+const DG_KEPALA_KELUARGA = [
+  { label: 'Laki-Laki', value: '1.291', color: 'bg-amber-500' },
+  { label: 'Perempuan', value: '423', color: 'bg-emerald-600' },
 ];
 
 const DG_ICONS = {
@@ -45,7 +55,7 @@ async function dgRenderInformasi(container) {
       </div>
 
       <h2 class="font-display text-xl font-bold text-emerald-950 mb-4">Data Kependudukan</h2>
-      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
         ${DG_DEMOGRAFI.map((d) => `
           <div class="dg-card rounded-xl border border-emerald-100 bg-white p-5 shadow-sm">
             <div class="h-10 w-10 rounded-lg bg-amber-100 flex items-center justify-center mb-3">
@@ -55,6 +65,31 @@ async function dgRenderInformasi(container) {
             <p class="text-sm text-gray-500 mt-0.5">${dgEscapeHTML(d.label)}</p>
           </div>
         `).join('')}
+      </div>
+
+      <div class="grid sm:grid-cols-2 gap-6 mb-8">
+        <div>
+          <h3 class="font-display text-base font-bold text-emerald-950 mb-3">Jenis Kelamin</h3>
+          <div class="grid grid-cols-2 gap-3">
+            ${DG_JENIS_KELAMIN.map((g) => `
+              <div class="${g.color} rounded-xl p-4 text-white shadow-sm">
+                <p class="text-2xl font-display font-extrabold">${dgEscapeHTML(g.value)}</p>
+                <p class="text-sm opacity-90 mt-0.5">${dgEscapeHTML(g.label)}</p>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+        <div>
+          <h3 class="font-display text-base font-bold text-emerald-950 mb-3">Kepala Keluarga</h3>
+          <div class="grid grid-cols-2 gap-3">
+            ${DG_KEPALA_KELUARGA.map((g) => `
+              <div class="${g.color} rounded-xl p-4 text-white shadow-sm">
+                <p class="text-2xl font-display font-extrabold">${dgEscapeHTML(g.value)}</p>
+                <p class="text-sm opacity-90 mt-0.5">${dgEscapeHTML(g.label)}</p>
+              </div>
+            `).join('')}
+          </div>
+        </div>
       </div>
 
       <p class="mt-8 text-sm text-gray-500">
