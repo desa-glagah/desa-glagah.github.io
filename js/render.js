@@ -84,6 +84,7 @@ const DG_BERITA_KATEGORI_STYLES = {
   Kesehatan: 'bg-rose-100 text-rose-800',
   Pertanian: 'bg-emerald-100 text-emerald-800',
   Lingkungan: 'bg-teal-100 text-teal-800',
+  Pendidikan: 'bg-indigo-100 text-indigo-800',
 };
 
 const DG_BERITA_PLACEHOLDER_ICON = `

@@ -32,7 +32,7 @@ async function dgRenderHome(container) {
 
     <section id="dg-search-results" class="max-w-6xl mx-auto px-4 sm:px-6 -mt-1"></section>
 
-    <section class="max-w-6xl mx-auto px-4 sm:px-6 py-12 grid sm:grid-cols-3 gap-5">
+    <section class="max-w-6xl mx-auto px-4 sm:px-6 py-12 grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
       <a href="#/lowongan" class="dg-card block rounded-xl border border-emerald-100 bg-white p-6 shadow-sm">
         <div class="h-10 w-10 rounded-lg bg-emerald-900 flex items-center justify-center mb-4">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M20 7h-3V5a2 2 0 00-2-2H9a2 2 0 00-2 2v2H4a1 1 0 00-1 1v10a2 2 0 002 2h14a2 2 0 002-2V8a1 1 0 00-1-1zM9 5h6v2H9V5z"/></svg>
@@ -46,6 +46,13 @@ async function dgRenderHome(container) {
         </div>
         <h3 class="font-display font-bold text-lg text-emerald-950 mb-1">Informasi Desa</h3>
         <p class="text-sm text-gray-600">Letak geografis dan data kependudukan Desa Glagah.</p>
+      </a>
+      <a href="#/profil" class="dg-card block rounded-xl border border-emerald-100 bg-white p-6 shadow-sm">
+        <div class="h-10 w-10 rounded-lg bg-emerald-900 flex items-center justify-center mb-4">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14c-4.418 0-8 2.239-8 5v1h16v-1c0-2.761-3.582-5-8-5z"/></svg>
+        </div>
+        <h3 class="font-display font-bold text-lg text-emerald-950 mb-1">Profil Desa</h3>
+        <p class="text-sm text-gray-600">Sejarah, visi misi, dan struktur perangkat Desa Glagah.</p>
       </a>
       <a href="#/umkm" class="dg-card block rounded-xl border border-emerald-100 bg-white p-6 shadow-sm">
         <div class="h-10 w-10 rounded-lg bg-emerald-900 flex items-center justify-center mb-4">
