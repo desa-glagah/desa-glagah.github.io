@@ -29,7 +29,9 @@ desa-glagah/
 │   ├── umkm.json              # Data produk UMKM (sumber kebenaran)
 │   └── berita.json             # Data berita desa (sumber kebenaran)
 ├── assets/
-│   └── perangkat/            # Foto perangkat desa
+│   ├── berita/               # Foto berita desa
+│   ├── perangkat/            # Foto perangkat desa
+│   └── umkm/                 # Foto produk UMKM (buat folder ini saat dibutuhkan)
 └── .nojekyll                # Mencegah GitHub Pages memproses folder via Jekyll
 ```
 
@@ -154,3 +156,87 @@ Kalau field `foto` diisi dengan path gambar (mis.
 `"foto": "assets/berita/musyawarah-jalan.jpg"`), foto itu yang dipakai
 sebagai foto utama; kalau `foto: null`, halaman otomatis menampilkan ikon
 placeholder alih-alih foto rusak.
+
+## Menambahkan/Mengedit Katalog UMKM
+
+Produk UMKM dikelola lewat `data/umkm.json`. Setiap produk punya struktur:
+
+```json
+{
+  "id": "umkm-007",
+  "nama": "Nama Usaha/Produk",
+  "kategori": "Kuliner",
+  "deskripsi": "Deskripsi singkat produk, tampil di kartu katalog.",
+  "harga": "Rp 20.000 / bungkus",
+  "whatsapp": "6281234567890",
+  "lokasi": "Dusun Krajan",
+  "foto": null
+}
+```
+
+Cara menambah produk baru:
+
+1. Buka `data/umkm.json`.
+2. Tambahkan objek baru di dalam array (jangan lupa koma pemisah antar objek),
+   gunakan `id` unik yang belum dipakai (mis. `umkm-007` jika terakhir
+   `umkm-006`).
+3. Isi `whatsapp` dengan nomor WhatsApp pemilik usaha (format `62...`, boleh
+   ditulis diawali `0` karena akan otomatis dikonversi — lihat bagian
+   "Kustomisasi Nomor WhatsApp").
+4. Kalau ada foto produk, simpan filenya di `assets/` (buat folder
+   `assets/umkm/` kalau belum ada) lalu isi field `foto` dengan path-nya,
+   mis. `"foto": "assets/umkm/kripik-sari.jpg"`. Kalau tidak ada foto,
+   biarkan `"foto": null` — kartu akan otomatis menampilkan ikon placeholder.
+5. Simpan file, lalu `git commit` + `git push` agar produk baru tampil di
+   halaman **Katalog UMKM** bagi semua pengunjung.
+
+Filter kategori pada halaman Katalog UMKM dibuat otomatis dari nilai
+`kategori` yang ada di data — jadi kategori baru (mis. "Peternakan") akan
+langsung muncul sebagai tombol filter tanpa perlu ubah kode.
+
+Tombol "Hubungi via WhatsApp" pada setiap produk memakai `js/whatsapp.js`
+untuk membuat link `wa.me` otomatis berisi pesan template perkenalan produk.
+
+## Menambahkan/Mengedit Lowongan Pekerjaan
+
+Lowongan resmi dikelola lewat `data/jobs.json`. Setiap lowongan punya struktur:
+
+```json
+{
+  "id": "job-005",
+  "judul": "Judul Lowongan",
+  "usaha": "Nama Usaha/Pemberi Kerja",
+  "deskripsi": "Deskripsi tugas dan kegiatan kerja.",
+  "syarat": "Syarat pelamar: usia, jenis kelamin, pendidikan, dsb.",
+  "lokasi": "Dusun/Blok, Desa Glagah",
+  "tipe": "Paruh Waktu",
+  "whatsapp": "6281234567890",
+  "gaji": "Rp 700.000 - Rp 900.000 / bulan",
+  "batas": "2026-08-15",
+  "foto": null,
+  "createdAt": "2026-07-20T08:00:00.000Z"
+}
+```
+
+Cara menambah lowongan baru secara manual (sebagai admin):
+
+1. Buka `data/jobs.json`.
+2. Tambahkan objek baru di dalam array dengan `id` unik yang belum dipakai
+   (mis. `job-005` jika terakhir `job-004`).
+3. `tipe` sebaiknya konsisten dengan nilai yang sudah ada (`Harian`,
+   `Paruh Waktu`, `Waktu Penuh`) supaya filter tipe di halaman Lowongan
+   tetap rapi, tapi nilai baru di luar itu tetap akan tampil.
+4. `batas` (tanggal batas lamaran) boleh diisi `null` kalau lowongan dibuka
+   terus-menerus tanpa batas waktu.
+5. `createdAt` dipakai untuk mengurutkan lowongan dari yang terbaru — isi
+   dengan format ISO (`YYYY-MM-DDTHH:mm:ss.sssZ`), atau salin waktu saat
+   ini dari lowongan lain sebagai contoh format.
+6. Simpan file, lalu `git commit` + `git push` agar lowongan tampil resmi
+   (tanpa label "Menunggu Verifikasi Admin") di halaman **Lowongan Pekerjaan**.
+
+**Alur lowongan dari pengunjung (via formulir "Pasang Lowongan"):** seperti
+dijelaskan di bagian "Alur data Git-based" di atas, lowongan yang diisi
+pengunjung lewat formulir di halaman Lowongan **tidak otomatis** masuk ke
+`data/jobs.json` — admin akan menerima ringkasannya via WhatsApp, lalu perlu
+menyalin isinya secara manual mengikuti struktur di atas dan melakukan
+langkah 1-6 supaya lowongan tersebut resmi tampil bagi semua pengunjung.
