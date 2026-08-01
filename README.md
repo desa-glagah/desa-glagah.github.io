@@ -5,11 +5,25 @@ Dibangun dengan HTML, JavaScript (vanilla), dan Tailwind CSS (via CDN) — tanpa
 proses build, tanpa backend/database server. Semua data bersumber dari file
 JSON di folder `data/` (arsitektur data berbasis Git).
 
+## Status Data Saat Ini
+
+| Halaman | Status | Catatan |
+|---|---|---|
+| Beranda | ✅ Siap | |
+| Informasi Desa | ✅ Siap | Data kependudukan sudah data asli |
+| Profil Desa | ✅ Siap | 13 perangkat sudah nama & foto asli |
+| Berita Desa | ✅ Siap | 2 berita sudah asli lengkap dengan foto |
+| Lowongan Pekerjaan | ⚠️ Perlu diedit | 4 lowongan di `data/jobs.json` masih data contoh/fiktif dan nomor `whatsapp`-nya masih dummy — ganti dengan lowongan asli (lihat bagian "Menambahkan/Mengedit Lowongan Pekerjaan") |
+| Katalog UMKM | ⚠️ Perlu diedit | Hanya "Cahaya Cake" yang sudah asli (foto + deskripsi); 5 produk lain di `data/umkm.json` masih contoh tanpa foto. **Semua 6 produk** (termasuk Cahaya Cake) masih pakai nomor `whatsapp` dummy `621234567890` — perlu diganti nomor asli pemilik usaha |
+
+Nomor WhatsApp admin desa (`DG_ADMIN_WHATSAPP` di `js/pages/lowongan.js`)
+sudah diisi nomor resmi kantor desa.
+
 ## Struktur Proyek
 
 ```
 desa-glagah/
-├── index.html              # Shell utama + navigasi + outlet router
+├── index.html              # Shell utama + navigasi + outlet router + favicon
 ├── css/
 │   └── style.css           # Watermark hero, fokus keyboard, kartu, dsb.
 ├── js/
@@ -19,7 +33,7 @@ desa-glagah/
 │   ├── render.js               # Komponen kartu lowongan, UMKM, berita (dipakai bersama)
 │   └── pages/
 │       ├── home.js              # Hero + pencarian gabungan + preview berita terkini
-│       ├── lowongan.js           # Papan lowongan + formulir "Pasang Lowongan"
+│       ├── lowongan.js           # Papan lowongan + formulir "Pasang Lowongan" + notifikasi WA admin
 │       ├── informasi.js           # Letak geografis + data kependudukan
 │       ├── profil.js               # Visi & misi + struktur perangkat desa
 │       ├── umkm.js                  # Katalog UMKM + filter kategori
@@ -29,9 +43,13 @@ desa-glagah/
 │   ├── umkm.json              # Data produk UMKM (sumber kebenaran)
 │   └── berita.json             # Data berita desa (sumber kebenaran)
 ├── assets/
+│   ├── logo_desa.png         # Logo Desa Glagah (header, footer, favicon)
+│   ├── logo_kabupaten.png    # Logo Kabupaten Probolinggo (header)
+│   ├── logo_unair.png        # Logo Universitas Airlangga (header + footer)
+│   ├── logo_bbk8.jpeg        # Logo BBK 8 Universitas Airlangga (footer)
 │   ├── berita/               # Foto berita desa
 │   ├── perangkat/            # Foto perangkat desa
-│   └── umkm/                 # Foto produk UMKM (buat folder ini saat dibutuhkan)
+│   └── umkm/                 # Foto produk UMKM
 └── .nojekyll                # Mencegah GitHub Pages memproses folder via Jekyll
 ```
 
@@ -69,17 +87,17 @@ Sebagai gantinya:
 1. Pengunjung mengisi formulir → data tersimpan sementara di `localStorage`
    browser pengunjung dan langsung tampil di daftar dengan label
    **"Menunggu Verifikasi Admin"**.
-2. WhatsApp otomatis terbuka berisi ringkasan lowongan yang dikirim ke nomor
-   admin desa, sehingga admin langsung mendapat notifikasi tanpa perlu
-   mengecek localStorage secara manual.
+2. WhatsApp otomatis terbuka berisi ringkasan lowongan yang dikirim ke
+   **nomor kantor desa** (`+62 852-3697-0941`), sehingga admin langsung
+   mendapat notifikasi tanpa perlu mengecek localStorage secara manual.
 3. Pengelola website (admin desa) meninjau data tersebut, lalu menambahkannya
    secara manual ke `data/jobs.json` dan melakukan `git commit` + `git push`
    agar lowongan resmi tampil bagi semua pengunjung.
 
-**Penting:** ganti nomor WhatsApp admin di `js/pages/lowongan.js`, konstanta
-`DG_ADMIN_WHATSAPP` (masih placeholder `6281234500000`), dengan nomor asli
-sebelum publikasi — kalau tidak, notifikasi lowongan baru tidak akan sampai
-ke siapa pun.
+Nomor tujuan notifikasi ini diatur lewat konstanta `DG_ADMIN_WHATSAPP` di
+`js/pages/lowongan.js` — saat ini sudah diisi nomor resmi kantor desa. Kalau
+nomor admin berganti di kemudian hari, cukup ubah nilai konstanta ini
+(format `62xxxxxxxxxx`, tanpa `+` atau `0` di depan).
 
 Ini konsisten dengan arsitektur "Git-based data" tanpa database — jika ke
 depan dibutuhkan alur yang lebih otomatis, `data.js` sudah terisolasi
@@ -87,10 +105,12 @@ sehingga cukup diganti untuk memanggil layanan backend/Google Form/Sheet API.
 
 ## Kustomisasi Nomor WhatsApp
 
-Nomor WhatsApp pada `data/jobs.json` dan `data/umkm.json` memakai data contoh
-(`6281234567xxx`). Ganti dengan nomor asli pemilik usaha/pemberi kerja sebelum
-publikasi. Format yang diterima: diawali `0` (mis. `0812xxxx`, otomatis
-dikonversi ke `62`) atau langsung `62812xxxx`.
+Nomor WhatsApp pada `data/jobs.json` dan `data/umkm.json` **masih memakai
+data contoh** (`621234567890`) di seluruh entri saat ini — termasuk pada
+produk UMKM "Cahaya Cake" yang datanya sendiri sudah asli. Ganti dengan
+nomor asli pemilik usaha/pemberi kerja masing-masing sebelum publikasi.
+Format yang diterima: diawali `0` (mis. `0812xxxx`, otomatis dikonversi ke
+`62`) atau langsung `62812xxxx`.
 
 ## Foto Perangkat Desa
 
@@ -127,6 +147,36 @@ dengan nilai `foto`.
 Tidak perlu foto dengan ukuran/rasio persis sama — foto akan otomatis
 dipotong jadi bulat (`object-cover`). Disarankan foto persegi (mis. 400x400px)
 dan ukuran file di bawah 200KB per foto agar halaman tetap cepat dimuat.
+
+## Logo & Favicon
+
+Ikon tab browser (favicon) diatur di `<head>` `index.html` lewat tag
+`<link rel="icon">`, memakai `assets/logo_desa.png`. Format PNG dipilih
+karena mendukung latar belakang transparan, sehingga logo tidak tampil
+dengan kotak warna aneh di belakangnya — berbeda dari format JPEG yang
+selalu punya latar belakang persegi solid.
+
+Logo yang tampil di **header** (kiri atas, di samping nama "DESA GLAGAH"):
+1. `assets/logo_desa.png` — Logo Desa Glagah
+2. `assets/logo_kabupaten.png` — Logo Kabupaten Probolinggo
+3. `assets/logo_unair.png` — Logo Universitas Airlangga
+
+Logo yang tampil di **footer** (bagian bawah, di atas baris hak cipta),
+disertai keterangan "Website ini merupakan hasil program kerja BBK 8
+Universitas Airlangga":
+1. `assets/logo_unair.png` — Logo Universitas Airlangga
+2. `assets/logo_bbk8.jpeg` — Logo BBK 8 Universitas Airlangga (dirender
+   bulat dengan class `rounded-full` karena bentuk aslinya sudah berupa
+   badge lingkaran)
+
+Semua `<img>` logo di atas memakai atribut `onerror` yang otomatis
+menyembunyikan gambar (`this.remove()`) kalau file logo belum ada atau
+gagal dimuat — jadi tidak akan tampil ikon gambar rusak di tengah header/
+footer sebelum filenya diunggah.
+
+Header situs memakai latar belakang **putih** (bukan hijau tua) supaya
+logo-logo di atas tampil jelas tanpa kotak latar belakang yang mengganggu,
+terutama untuk file logo berformat JPEG yang belum transparan.
 
 ## Menambahkan/Mengedit Berita Desa
 

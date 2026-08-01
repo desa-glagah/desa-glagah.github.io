@@ -1,7 +1,5 @@
 // js/pages/lowongan.js
 
-const DG_MAX_FILE_BYTES = 1 * 1024 * 1024; // 1MB
-
 // WhatsApp number of the village admin who reviews and publishes new job
 // postings. Uses the official village office contact number.
 const DG_ADMIN_WHATSAPP = '6285236970941';
@@ -101,12 +99,6 @@ async function dgRenderLowongan(container) {
               <input id="f-batas" name="batas" type="date"
                 class="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-emerald-600 focus:ring-emerald-600" />
             </div>
-            <div>
-              <label for="f-foto" class="block text-sm font-medium text-gray-700 mb-1">Foto <span class="text-gray-400 font-normal">(opsional, maks 1MB)</span></label>
-              <input id="f-foto" name="foto" type="file" accept="image/*"
-                class="w-full text-sm text-gray-600 file:mr-3 file:py-2 file:px-3 file:rounded-lg file:border-0 file:bg-emerald-50 file:text-emerald-800 file:text-sm file:font-medium" />
-              <p id="f-foto-alert" class="hidden text-xs text-red-600 mt-1.5"></p>
-            </div>
 
             <button type="submit"
               class="w-full mt-2 inline-flex items-center justify-center gap-2 bg-[#0f6c5f] hover:bg-emerald-800 text-white font-semibold text-sm py-3 rounded-lg transition-colors">
@@ -123,8 +115,6 @@ async function dgRenderLowongan(container) {
   const openBtn = container.querySelector('#dg-open-form-btn');
   const closeEls = container.querySelectorAll('[data-close-modal]');
   const form = container.querySelector('#dg-job-form');
-  const fotoInput = container.querySelector('#f-foto');
-  const fotoAlert = container.querySelector('#f-foto-alert');
 
   const openModal = () => {
     modal.classList.remove('hidden');
@@ -137,26 +127,6 @@ async function dgRenderLowongan(container) {
 
   openBtn.addEventListener('click', openModal);
   closeEls.forEach((el) => el.addEventListener('click', closeModal));
-
-  // Client-side validation: file size must not exceed 1MB.
-  let fotoDataUrl = null;
-  fotoInput.addEventListener('change', () => {
-    fotoAlert.classList.add('hidden');
-    fotoDataUrl = null;
-    const file = fotoInput.files[0];
-    if (!file) return;
-
-    if (file.size > DG_MAX_FILE_BYTES) {
-      fotoAlert.textContent = `Ukuran file (${(file.size / 1024 / 1024).toFixed(2)}MB) melebihi batas 1MB. Silakan pilih file lain.`;
-      fotoAlert.classList.remove('hidden');
-      fotoInput.value = '';
-      return;
-    }
-
-    const reader = new FileReader();
-    reader.onload = () => { fotoDataUrl = reader.result; };
-    reader.readAsDataURL(file);
-  });
 
   form.addEventListener('submit', (e) => {
     e.preventDefault();
@@ -174,14 +144,13 @@ async function dgRenderLowongan(container) {
       whatsapp: fd.get('whatsapp').trim(),
       gaji: fd.get('gaji').trim() || null,
       batas: fd.get('batas') || null,
-      foto: fotoDataUrl,
+      foto: null,
       createdAt: new Date().toISOString(),
     };
 
     dgSavePendingJob(job);
     closeModal();
     form.reset();
-    fotoDataUrl = null;
     dgToast('Lowongan berhasil dikirim. Membuka WhatsApp untuk konfirmasi ke admin...');
     dgRefreshJobList(container);
     dgNotifyAdmin(job);
@@ -204,7 +173,6 @@ function dgNotifyAdmin(job) {
     `Gaji: ${job.gaji || '-'}`,
     `Batas Lamaran: ${batas || '-'}`,
     `Kontak WhatsApp Pemberi Kerja: ${job.whatsapp}`,
-    job.foto ? 'Foto: dilampirkan (lihat di daftar lowongan situs)' : 'Foto: -',
     '',
     'Mohon ditinjau lalu ditambahkan ke data/jobs.json jika sudah sesuai.',
   ];
