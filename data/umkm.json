@@ -1,13 +1,13 @@
 [
   {
     "id": "umkm-001",
-    "nama": "Kripik Pisang Bu Sari",
+    "nama": "Cahaya Cake",
     "kategori": "Kuliner",
-    "deskripsi": "Kripik pisang renyah dengan varian rasa original, manis, dan pedas. Diproduksi rumahan tanpa bahan pengawet.",
+    "deskripsi": "Cahaya Cake merupakan UMKM kuliner milik Ibu Amsa yang berdiri sejak tahun 2020 di Kecamatan Pakuniran. Usaha ini melayani pembuatan aneka kue, jajanan pasar, dan snack box sesuai dengan pesanan (made by order), sehingga seluruh produk selalu dibuat segar setiap harinya. Produk unggulan Cahaya Cake adalah brownies dan bolu gulung yang menjadi favorit pelanggan. Selain menerima pesanan untuk berbagai acara, seperti lamaran dan kegiatan sekolah, Cahaya Cake juga melayani pembuatan kue sesuai permintaan pelanggan. Dengan cita rasa yang terjaga dan pelayanan yang fleksibel, Cahaya Cake menjadi salah satu pilihan masyarakat Pakuniran untuk memenuhi kebutuhan konsumsi untuk berbagai acara.",
     "harga": "Rp 12.000 / bungkus",
     "whatsapp": "621234567890",
     "lokasi": "Dusun Sumberejo",
-    "foto": null
+    "foto": "assets/umkm/cahaya-cake.png"
   },
   {
     "id": "umkm-002",
