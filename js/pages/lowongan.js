@@ -2,7 +2,7 @@
 
 // WhatsApp number of the village admin who reviews and publishes new job
 // postings. Uses the official village office contact number.
-const DG_ADMIN_WHATSAPP = '6285236970941';
+const DG_ADMIN_WHATSAPP = '628118741812';
 
 async function dgRenderLowongan(container) {
   container.innerHTML = `
