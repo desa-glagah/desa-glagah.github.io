@@ -2,7 +2,7 @@
 
 // WhatsApp number of the village admin who reviews and publishes new job
 // postings. Uses the official village office contact number.
-const DG_ADMIN_WHATSAPP = '628118741812';
+const DG_ADMIN_WHATSAPP = '6285236970941';
 
 async function dgRenderLowongan(container) {
   container.innerHTML = `
@@ -42,10 +42,8 @@ async function dgRenderLowongan(container) {
           <h2 class="font-display text-xl font-bold text-emerald-950 mb-1">Pasang Lowongan Baru</h2>
           <p class="text-sm text-gray-500 mb-5">
             Setelah dikirim, WhatsApp akan otomatis terbuka berisi ringkasan
-            lowongan ke admin desa untuk verifikasi. Lowongan akan tampil di
-            daftar dengan label
-            <span class="font-medium text-amber-600">"Menunggu Verifikasi Admin"</span>
-            sampai resmi ditambahkan oleh pengelola website.
+            lowongan yang tinggal dikirim ke admin desa untuk ditinjau. Lowongan
+            akan tampil resmi di daftar setelah admin menambahkannya.
           </p>
 
           <form id="dg-job-form" class="space-y-4" novalidate>
@@ -134,7 +132,6 @@ async function dgRenderLowongan(container) {
 
     const fd = new FormData(form);
     const job = {
-      id: dgGenerateId('job'),
       judul: fd.get('judul').trim(),
       usaha: fd.get('usaha').trim(),
       deskripsi: fd.get('deskripsi').trim(),
@@ -144,15 +141,10 @@ async function dgRenderLowongan(container) {
       whatsapp: fd.get('whatsapp').trim(),
       gaji: fd.get('gaji').trim() || null,
       batas: fd.get('batas') || null,
-      foto: null,
-      createdAt: new Date().toISOString(),
     };
 
-    dgSavePendingJob(job);
     closeModal();
     form.reset();
-    dgToast('Lowongan berhasil dikirim. Membuka WhatsApp untuk konfirmasi ke admin...');
-    dgRefreshJobList(container);
     dgNotifyAdmin(job);
   });
 
@@ -176,8 +168,11 @@ function dgNotifyAdmin(job) {
     '',
     'Mohon ditinjau lalu ditambahkan ke data/jobs.json jika sudah sesuai.',
   ];
-  const waLink = dgBuildWhatsAppLink(DG_ADMIN_WHATSAPP, lines.join('\n'));
+  const message = lines.join('\n');
+  const waLink = dgBuildWhatsAppLink(DG_ADMIN_WHATSAPP, message);
+  const waWebLink = dgBuildWhatsAppWebLink(DG_ADMIN_WHATSAPP, message);
   window.open(waLink, '_blank', 'noopener,noreferrer');
+  dgToast('Lowongan berhasil dikirim. Membuka WhatsApp untuk konfirmasi ke admin...', waWebLink);
 }
 
 async function dgRefreshJobList(container) {
@@ -199,10 +194,24 @@ async function dgRefreshJobList(container) {
   listEl.innerHTML = jobs.map(dgJobCardHTML).join('');
 }
 
-function dgToast(message) {
+function dgToast(message, fallbackWaLink) {
   const el = document.createElement('div');
-  el.className = 'fixed bottom-5 left-1/2 -translate-x-1/2 bg-emerald-900 text-white text-sm font-medium px-5 py-3 rounded-full shadow-lg z-[60]';
-  el.textContent = message;
+  el.className = 'fixed bottom-5 left-1/2 -translate-x-1/2 bg-emerald-900 text-white text-sm font-medium px-5 py-3 rounded-full shadow-lg z-[60] flex items-center gap-3 max-w-[90vw]';
+
+  const textSpan = document.createElement('span');
+  textSpan.textContent = message;
+  el.appendChild(textSpan);
+
+  if (fallbackWaLink) {
+    const link = document.createElement('a');
+    link.href = fallbackWaLink;
+    link.target = '_blank';
+    link.rel = 'noopener noreferrer';
+    link.textContent = 'Tidak terbuka? Buka lewat browser';
+    link.className = 'shrink-0 underline decoration-amber-400 text-amber-300 hover:text-amber-200 whitespace-nowrap';
+    el.appendChild(link);
+  }
+
   document.body.appendChild(el);
-  setTimeout(() => el.remove(), 3200);
+  setTimeout(() => el.remove(), 8000);
 }

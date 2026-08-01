@@ -27,6 +27,19 @@ function dgBuildWhatsAppLink(rawPhone, message) {
   return `https://wa.me/${sanitized}?text=${encoded}`;
 }
 
+/**
+ * Builds a web.whatsapp.com link that always opens WhatsApp Web in the
+ * browser instead of attempting to hand off to the native WhatsApp app via
+ * the whatsapp:// protocol. Useful as a fallback when a device/browser has
+ * no WhatsApp app installed/registered and the wa.me link fails with a
+ * "no app associated with this action" error.
+ */
+function dgBuildWhatsAppWebLink(rawPhone, message) {
+  const sanitized = dgSanitizePhone(rawPhone);
+  const encoded = encodeURIComponent(message);
+  return `https://web.whatsapp.com/send?phone=${sanitized}&text=${encoded}`;
+}
+
 function dgUmkmContactMessage(namaUsaha) {
   return `Halo, saya tertarik dengan produk ${namaUsaha} Anda yang tertera di website desa.`;
 }

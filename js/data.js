@@ -2,14 +2,21 @@
 // Data access layer for Desa Glagah's Git-based JSON data architecture.
 //
 // The site has no backend server. The files in /data are the source of truth
-// and are meant to be edited and committed by a village admin. To let visitors
-// submit a job posting from the browser, new entries are kept locally
-// (localStorage) as "pending" and are visually flagged until an admin copies
-// them into data/jobs.json and pushes the change to the repository.
+// and are meant to be edited and committed by a village admin. Job postings
+// submitted from the browser are sent straight to the admin via a pre-filled
+// WhatsApp message (see js/pages/lowongan.js) — they are NOT stored locally,
+// so nothing about them lingers in the visitor's browser and nothing can end
+// up duplicated once the admin adds the entry to data/jobs.json.
 
-const DG_STORAGE_KEYS = {
-  pendingJobs: 'dg_pending_jobs',
-};
+// One-time cleanup: earlier versions of this site cached submitted job
+// postings in localStorage under this key, which could cause duplicate
+// "Menunggu Verifikasi Admin" cards. Remove any leftover cache so it can
+// never resurface.
+try {
+  localStorage.removeItem('dg_pending_jobs');
+} catch (err) {
+  // localStorage may be unavailable (e.g. private browsing); safe to ignore.
+}
 
 async function dgFetchJSON(path) {
   const res = await fetch(path, { cache: 'no-store' });
@@ -19,39 +26,13 @@ async function dgFetchJSON(path) {
   return res.json();
 }
 
-function dgGetPendingJobs() {
-  try {
-    const raw = localStorage.getItem(DG_STORAGE_KEYS.pendingJobs);
-    return raw ? JSON.parse(raw) : [];
-  } catch (err) {
-    console.error('Gagal membaca lowongan lokal:', err);
-    return [];
-  }
-}
-
-function dgSavePendingJob(job) {
-  const pending = dgGetPendingJobs();
-  pending.unshift(job);
-  localStorage.setItem(DG_STORAGE_KEYS.pendingJobs, JSON.stringify(pending));
-  return pending;
-}
-
-function dgRemovePendingJob(id) {
-  const pending = dgGetPendingJobs().filter((j) => j.id !== id);
-  localStorage.setItem(DG_STORAGE_KEYS.pendingJobs, JSON.stringify(pending));
-  return pending;
-}
-
 async function dgLoadJobs() {
-  let seed = [];
   try {
-    seed = await dgFetchJSON('data/jobs.json');
+    return await dgFetchJSON('data/jobs.json');
   } catch (err) {
     console.error(err);
+    return [];
   }
-  const pending = dgGetPendingJobs().map((j) => ({ ...j, _pending: true }));
-  // Pending (locally submitted, not yet committed) jobs surface first.
-  return [...pending, ...seed];
 }
 
 async function dgLoadUMKM() {
