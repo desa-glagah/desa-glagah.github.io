@@ -3,9 +3,8 @@
 const DG_MAX_FILE_BYTES = 1 * 1024 * 1024; // 1MB
 
 // WhatsApp number of the village admin who reviews and publishes new job
-// postings. Replace with the real number (format: 62xxxxxxxxxx, no "+" or
-// leading zero) before deploying to production.
-const DG_ADMIN_WHATSAPP = '621234567890';
+// postings. Uses the official village office contact number.
+const DG_ADMIN_WHATSAPP = '6285236970941';
 
 async function dgRenderLowongan(container) {
   container.innerHTML = `
