@@ -53,13 +53,20 @@ function dgJobCardHTML(job) {
   `;
 }
 
+function dgUmkmThumbError(imgEl) {
+  const wrapper = imgEl.parentElement;
+  wrapper.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M4 4h16v16H4V4zm4 4h8v8H8V8z"/></svg>';
+}
+
 function dgUmkmCardHTML(item) {
   const waMsg = dgUmkmContactMessage(item.nama);
   const waLink = dgBuildWhatsAppLink(item.whatsapp, waMsg);
   return `
     <article class="dg-card rounded-xl border border-emerald-100 bg-white overflow-hidden shadow-sm flex flex-col" data-kategori="${dgEscapeHTML(item.kategori)}">
-      <div class="h-36 bg-emerald-50 flex items-center justify-center text-emerald-300">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M4 4h16v16H4V4zm4 4h8v8H8V8z"/></svg>
+      <div class="h-36 bg-emerald-50 flex items-center justify-center text-emerald-300 overflow-hidden">
+        ${item.foto
+          ? `<img src="${dgEscapeHTML(item.foto)}" alt="${dgEscapeHTML(item.nama)}" class="h-36 w-full object-cover" onerror="dgUmkmThumbError(this)" />`
+          : `<svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M4 4h16v16H4V4zm4 4h8v8H8V8z"/></svg>`}
       </div>
       <div class="p-4 flex flex-col flex-1">
         <span class="dg-badge inline-block mb-2 w-fit rounded-full bg-emerald-100 text-emerald-800 px-2.5 py-1">${dgEscapeHTML(item.kategori)}</span>
