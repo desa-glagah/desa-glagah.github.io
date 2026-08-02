@@ -5,20 +5,6 @@ Dibangun dengan HTML, JavaScript (vanilla), dan Tailwind CSS (via CDN) — tanpa
 proses build, tanpa backend/database server. Semua data bersumber dari file
 JSON di folder `data/` (arsitektur data berbasis Git).
 
-## Status Data Saat Ini
-
-| Halaman | Status | Catatan |
-|---|---|---|
-| Beranda | ✅ Siap | |
-| Informasi Desa | ✅ Siap | Data kependudukan sudah data asli |
-| Profil Desa | ✅ Siap | 13 perangkat sudah nama & foto asli |
-| Berita Desa | ✅ Siap | 2 berita sudah asli lengkap dengan foto |
-| Katalog UMKM | ⚠️ Hampir siap | 4 dari 6 produk sudah data asli (nama, deskripsi, harga, lokasi, WhatsApp asli) lengkap dengan halaman detail (`#/umkm/:id`). **"Batik Tulis Glagah Asri" dan "Pupuk Kompos Tani Makmur"** masih data contoh tanpa foto dan nomor WhatsApp-nya masih dummy `621234567890` |
-| Lowongan Pekerjaan | ⚠️ Perlu diedit | 4 lowongan di `data/jobs.json` masih data contoh/fiktif dan nomor `whatsapp`-nya masih dummy — ganti dengan lowongan asli (lihat bagian "Menambahkan/Mengedit Lowongan Pekerjaan") |
-
-Nomor WhatsApp admin desa (`DG_ADMIN_WHATSAPP` di `js/pages/lowongan.js`)
-sudah diisi nomor resmi kantor desa.
-
 ## Struktur Proyek
 
 ```
@@ -52,18 +38,6 @@ desa-glagah/
 │   └── umkm/                 # Foto produk UMKM
 └── .nojekyll                # Mencegah GitHub Pages memproses folder via Jekyll
 ```
-
-## Menjalankan secara lokal (PyCharm)
-
-1. Buka folder ini sebagai proyek di PyCharm.
-2. Karena situs memakai `fetch()` untuk membaca file JSON, situs **tidak bisa**
-   dibuka langsung dari `file://` — jalankan lewat server lokal:
-   - Klik kanan `index.html` → **Open in Browser**, atau
-   - Jalankan server sederhana dari terminal PyCharm:
-     ```bash
-     python3 -m http.server 8000
-     ```
-     lalu buka `http://localhost:8000`.
 
 ## Deploy ke GitHub Pages
 
@@ -186,33 +160,387 @@ terutama untuk file logo berformat JPEG yang belum transparan.
 
 ## Menambahkan/Mengedit Berita Desa
 
-Berita dikelola lewat `data/berita.json`. Setiap berita punya struktur:
+Semua berita yang tampil pada website diambil dari file:
+
+```
+data/berita.json
+```
+
+Website **tidak memiliki halaman admin** untuk menambah berita secara langsung. Oleh karena itu, setiap berita baru harus ditambahkan dengan mengedit file `berita.json`.
+
+---
+
+## Langkah 1. Siapkan bahan berita
+
+Sebelum mulai mengedit file, siapkan terlebih dahulu informasi berikut.
+
+- Judul berita
+- Tanggal berita
+- Kategori berita
+- Ringkasan berita (1–2 kalimat)
+- Isi berita lengkap
+- Foto berita (jika ada)
+
+Contoh:
+
+**Judul**
+
+```
+Kerja Bakti Pembersihan Saluran Air Desa Glagah
+```
+
+**Tanggal**
+
+```
+2026-08-12
+```
+
+**Kategori**
+
+```
+Gotong Royong
+```
+
+**Ringkasan**
+
+```
+Pemerintah Desa bersama masyarakat melaksanakan kerja bakti membersihkan saluran air guna mencegah banjir saat musim hujan.
+```
+
+**Isi Berita**
+
+```
+Pemerintah Desa Glagah bersama masyarakat mengadakan kegiatan kerja bakti membersihkan saluran air di Dusun Krajan pada hari Rabu. Kegiatan ini diikuti oleh perangkat desa, RT/RW, Karang Taruna, dan warga sekitar. Melalui kegiatan ini diharapkan saluran air tetap lancar sehingga dapat mengurangi risiko banjir pada musim penghujan.
+```
+
+---
+
+## Langkah 2. Siapkan foto berita
+
+Apabila berita memiliki foto:
+
+1. Simpan foto ke folder
+
+```
+assets/berita/
+```
+
+2. Gunakan nama file yang mudah dikenali.
+
+Contoh:
+
+```
+kerja-bakti-2026.jpg
+```
+
+atau
+
+```
+musyawarah-desa.jpeg
+```
+
+**Disarankan**
+
+- format JPG atau PNG
+- ukuran maksimal sekitar 500 KB
+- lebar minimal 1000 pixel agar hasilnya tetap jelas
+
+---
+
+## Langkah 3. Buka file berita
+
+Buka file
+
+```
+data/berita.json
+```
+
+Di dalam file tersebut terdapat beberapa berita yang bentuknya seperti berikut.
 
 ```json
 {
-  "id": "berita-006",
-  "judul": "Judul Berita",
-  "tanggal": "2026-07-15",
-  "kategori": "Pembangunan",
-  "ringkasan": "Ringkasan singkat 1-2 kalimat, tampil di kartu.",
-  "konten": "Isi lengkap berita, tampil saat kartu diklik (modal baca selengkapnya).",
-  "foto": null
+  "id": "berita-001",
+  "judul": "...",
+  "tanggal": "...",
+  ...
 }
 ```
 
-Berita otomatis diurutkan dari yang terbaru (berdasarkan `tanggal`) di halaman
-Berita Desa maupun di preview "Berita Terkini" pada halaman utama (3 berita
-terbaru). Kategori pada badge kartu mengikuti daftar warna di
-`DG_BERITA_KATEGORI_STYLES` (`js/render.js`) — kategori baru di luar daftar
-itu akan tetap tampil dengan warna abu-abu netral.
+Setiap blok seperti di atas adalah **1 berita**.
 
-Setiap berita punya halaman sendiri di `#/berita/<id>` (contoh:
-`#/berita/berita-001`), menampilkan foto utama diikuti isi berita lengkap.
-Kalau field `foto` diisi dengan path gambar (mis.
-`"foto": "assets/berita/musyawarah-jalan.jpg"`), foto itu yang dipakai
-sebagai foto utama; kalau `foto: null`, halaman otomatis menampilkan ikon
-placeholder alih-alih foto rusak.
+---
 
+## Langkah 4. Tambahkan berita baru
+
+Scroll hingga bagian paling bawah.
+
+Tambahkan objek berita baru.
+
+Jangan menghapus berita yang sudah ada.
+
+Tambahkan **koma ( , )** setelah berita sebelumnya apabila diperlukan.
+
+Contoh:
+
+```json
+[
+   {
+      berita pertama
+   },
+
+   {
+      berita kedua
+   },
+
+   {
+      berita baru
+   }
+]
+```
+
+Perhatikan bahwa setiap berita dipisahkan dengan tanda koma.
+
+---
+
+## Langkah 5. Isi ID berita
+
+Setiap berita harus memiliki ID yang berbeda.
+
+Contoh:
+
+```
+berita-001
+berita-002
+berita-003
+```
+
+Apabila berita terakhir adalah
+
+```
+berita-008
+```
+
+maka berita berikutnya menjadi
+
+```
+berita-009
+```
+
+Jangan menggunakan ID yang sama karena dapat menyebabkan berita tidak tampil dengan benar.
+
+---
+
+## Langkah 6. Isi Judul
+
+Cari bagian
+
+```json
+"judul":
+```
+
+Kemudian isi dengan judul berita.
+
+Contoh:
+
+```json
+"judul": "Kerja Bakti Membersihkan Saluran Air"
+```
+
+Judul ini akan tampil:
+
+- pada halaman Berita Desa
+- pada halaman utama
+- pada halaman detail berita
+
+---
+
+## Langkah 7. Isi Tanggal
+
+Cari bagian
+
+```json
+"tanggal":
+```
+
+Gunakan format:
+
+```
+YYYY-MM-DD
+```
+
+Contoh:
+
+```json
+"tanggal": "2026-08-12"
+```
+
+Jangan menulis seperti:
+
+```
+12 Agustus 2026
+```
+
+atau
+
+```
+12/08/2026
+```
+
+karena website tidak dapat mengurutkan berita dengan benar.
+
+---
+
+## Langkah 8. Isi Kategori
+
+Cari bagian
+
+```json
+"kategori":
+```
+
+Contoh:
+
+```json
+"kategori": "Pembangunan"
+```
+
+atau
+
+```json
+"kategori": "Gotong Royong"
+```
+
+atau
+
+```json
+"kategori": "Pemerintahan"
+```
+
+Kategori akan muncul sebagai label pada kartu berita.
+
+---
+
+## Langkah 9. Isi Ringkasan
+
+Cari bagian
+
+```json
+"ringkasan":
+```
+
+Isi dengan 1–2 kalimat pendek.
+
+Contoh:
+
+```json
+"ringkasan": "Pemerintah Desa bersama warga melaksanakan kerja bakti membersihkan saluran air."
+```
+
+Ringkasan ini akan tampil pada kartu berita.
+
+---
+
+## Langkah 10. Isi Konten Berita
+
+Cari bagian
+
+```json
+"konten":
+```
+
+Isi dengan isi berita lengkap.
+
+Contoh:
+
+```json
+"konten": "Pemerintah Desa Glagah bersama masyarakat melaksanakan kerja bakti membersihkan saluran air di Dusun Krajan. Kegiatan ini diikuti oleh perangkat desa, RT, RW, Karang Taruna, dan warga sekitar. Melalui kegiatan tersebut diharapkan lingkungan menjadi lebih bersih dan saluran air tidak tersumbat."
+```
+
+Semakin lengkap isi berita, semakin baik informasi yang diterima masyarakat.
+
+---
+
+## Langkah 11. Menambahkan Foto
+
+Jika berita memiliki foto, ubah bagian
+
+```json
+"foto": null
+```
+
+menjadi
+
+```json
+"foto": "assets/berita/kerja-bakti-2026.jpg"
+```
+
+Pastikan:
+
+- nama file sama persis
+- huruf besar dan kecil sama
+- file benar-benar berada di folder
+
+```
+assets/berita/
+```
+
+Jika nama file berbeda sedikit saja, foto tidak akan muncul.
+
+---
+
+## Langkah 12. Simpan File
+
+Tekan
+
+```
+Ctrl + S
+```
+
+untuk menyimpan perubahan.
+
+---
+
+## Langkah 13. Periksa Kembali
+
+Sebelum mengunggah website, pastikan:
+
+✅ Tidak ada tanda koma yang hilang.
+
+✅ Semua tanda kutip lengkap.
+
+✅ Nama file foto benar.
+
+✅ Tanggal menggunakan format YYYY-MM-DD.
+
+✅ ID berita tidak sama dengan berita lain.
+
+---
+
+## Contoh Berita Lengkap
+
+```json
+{
+  "id": "berita-009",
+  "judul": "Kerja Bakti Membersihkan Saluran Air",
+  "tanggal": "2026-08-12",
+  "kategori": "Gotong Royong",
+  "ringkasan": "Pemerintah Desa bersama warga melaksanakan kerja bakti membersihkan saluran air.",
+  "konten": "Pemerintah Desa Glagah bersama masyarakat melaksanakan kerja bakti membersihkan saluran air di Dusun Krajan. Kegiatan ini diikuti perangkat desa dan masyarakat untuk menjaga kebersihan lingkungan serta mencegah banjir.",
+  "foto": "assets/berita/kerja-bakti-2026.jpg"
+}
+```
+
+---
+
+## Setelah Berita Ditambahkan
+
+Setelah file disimpan dan website diperbarui, berita akan otomatis muncul pada:
+
+- Halaman **Beranda** sebagai Berita Terkini.
+- Halaman **Berita Desa**.
+- Halaman **Detail Berita** ketika berita diklik.
+
+Tidak perlu mengubah file lain selain `data/berita.json`, kecuali ingin menambahkan foto ke folder `assets/berita/`.
 ## Menambahkan/Mengedit Katalog UMKM
 
 Produk UMKM dikelola lewat `data/umkm.json`. Setiap produk punya struktur:
