@@ -92,6 +92,7 @@ async function dgRenderUMKMDetail(container, id) {
   const kategoriStyle = DG_UMKM_KATEGORI_STYLES[item.kategori] || 'bg-emerald-100 text-emerald-800';
   const waMsg = dgUmkmContactMessage(item.nama);
   const waLink = dgBuildWhatsAppLink(item.whatsapp, waMsg);
+  const waWebLink = dgBuildWhatsAppWebLink(item.whatsapp, waMsg);
   const lainnya = items.filter((i) => i.id !== item.id && i.kategori === item.kategori).slice(0, 3);
 
   container.innerHTML = `
@@ -127,6 +128,10 @@ async function dgRenderUMKMDetail(container, id) {
          class="inline-flex items-center gap-2 bg-emerald-900 hover:bg-emerald-800 text-white text-sm font-semibold px-5 py-3 rounded-full transition-colors">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12.04 2c-5.52 0-10 4.48-10 10 0 1.76.46 3.48 1.34 5L2 22l5.14-1.35a10 10 0 004.9 1.25h.01c5.52 0 10-4.48 10-10s-4.48-10-10-10zm0 18.15h-.01a8.16 8.16 0 01-4.16-1.14l-.3-.18-3.05.8.82-2.97-.2-.31a8.15 8.15 0 01-1.25-4.35c0-4.5 3.66-8.16 8.16-8.16a8.1 8.1 0 015.77 2.39 8.1 8.1 0 012.39 5.77c0 4.5-3.67 8.16-8.17 8.16zm4.47-6.12c-.24-.12-1.45-.72-1.68-.8-.22-.08-.39-.12-.55.12-.16.24-.63.8-.78.96-.14.16-.29.18-.53.06-.24-.12-1.03-.38-1.96-1.21-.72-.65-1.21-1.44-1.35-1.68-.14-.24-.02-.37.11-.49.11-.11.24-.29.36-.43.12-.14.16-.24.24-.4.08-.16.04-.31-.02-.43-.06-.12-.55-1.32-.75-1.81-.2-.48-.4-.41-.55-.42h-.47c-.16 0-.43.06-.65.31-.22.24-.86.84-.86 2.04 0 1.2.88 2.36 1 2.52.12.16 1.73 2.64 4.2 3.7.59.25 1.05.4 1.41.52.59.19 1.13.16 1.56.1.48-.07 1.45-.59 1.65-1.16.2-.57.2-1.06.14-1.16-.06-.1-.22-.16-.46-.28z"/></svg>
         Hubungi via WhatsApp
+      </a>
+      <a href="${waWebLink}" target="_blank" rel="noopener noreferrer"
+         class="block mt-2 text-xs text-gray-400 hover:text-emerald-700 transition-colors">
+        Tidak ada aplikasi WhatsApp? Buka lewat browser
       </a>
     </article>
 

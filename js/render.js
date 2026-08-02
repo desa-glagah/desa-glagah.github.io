@@ -25,10 +25,10 @@ function dgJobCardHTML(job) {
   const batas = dgFormatDate(job.batas);
   const applyMsg = dgJobApplyMessage(job.judul, job.usaha);
   const waLink = dgBuildWhatsAppLink(job.whatsapp, applyMsg);
+  const waWebLink = dgBuildWhatsAppWebLink(job.whatsapp, applyMsg);
 
   return `
     <article class="dg-card rounded-xl border border-emerald-100 bg-white p-5 shadow-sm flex flex-col">
-      ${job._pending ? `<span class="dg-badge inline-block mb-2 w-fit rounded-full bg-amber-100 text-amber-700 px-2.5 py-1">Menunggu Verifikasi Admin</span>` : ''}
       <div class="flex items-start justify-between gap-2 mb-1">
         <h3 class="font-display font-bold text-emerald-950 leading-snug">${dgEscapeHTML(job.judul)}</h3>
         <span class="dg-badge shrink-0 rounded-full px-2.5 py-1 ${tipeStyle}">${dgEscapeHTML(job.tipe)}</span>
@@ -44,10 +44,16 @@ function dgJobCardHTML(job) {
           ${job.gaji ? `<p class="font-semibold text-emerald-900">${dgEscapeHTML(job.gaji)}</p>` : '<p class="text-gray-400">Gaji: nego</p>'}
           ${batas ? `<p class="text-xs text-gray-400">Batas lamaran: ${batas}</p>` : ''}
         </div>
-        <a href="${waLink}" target="_blank" rel="noopener noreferrer"
-           class="shrink-0 inline-flex items-center gap-1.5 bg-emerald-900 hover:bg-emerald-800 text-white text-sm font-semibold px-4 py-2 rounded-full transition-colors">
-          Lamar
-        </a>
+        <div class="shrink-0 flex flex-col items-end gap-1">
+          <a href="${waLink}" target="_blank" rel="noopener noreferrer"
+             class="inline-flex items-center gap-1.5 bg-emerald-900 hover:bg-emerald-800 text-white text-sm font-semibold px-4 py-2 rounded-full transition-colors">
+            Lamar
+          </a>
+          <a href="${waWebLink}" target="_blank" rel="noopener noreferrer"
+             class="text-xs text-gray-400 hover:text-emerald-700 transition-colors">
+            Tidak ada aplikasi WhatsApp? Buka lewat browser
+          </a>
+        </div>
       </div>
     </article>
   `;
