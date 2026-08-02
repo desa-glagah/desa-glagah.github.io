@@ -107,6 +107,33 @@ function dgUmkmCardHTML(item) {
   `;
 }
 
+function dgUmkmMenuHTML(menu) {
+  if (!menu || !menu.length) return '';
+  return `
+    <div class="mb-8">
+      <h2 class="font-display text-lg font-bold text-emerald-950 mb-4">Daftar Menu / Produk</h2>
+      <div class="space-y-6">
+        ${menu.map((grup) => `
+          <div>
+            ${grup.kategori ? `<h3 class="text-sm font-semibold text-emerald-800 uppercase tracking-wide mb-2">${dgEscapeHTML(grup.kategori)}</h3>` : ''}
+            <div class="rounded-xl border border-emerald-100 divide-y divide-emerald-50 overflow-hidden bg-white">
+              ${(grup.items || []).map((it) => `
+                <div class="flex items-start justify-between gap-4 px-4 py-2.5">
+                  <div class="min-w-0">
+                    <p class="text-sm font-medium text-emerald-950">${dgEscapeHTML(it.nama)}</p>
+                    ${it.varian ? `<p class="text-xs text-gray-500">${dgEscapeHTML(it.varian)}</p>` : ''}
+                  </div>
+                  <p class="shrink-0 text-sm font-semibold text-amber-600 whitespace-nowrap">${dgEscapeHTML(it.harga || '')}</p>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+  `;
+}
+
 const DG_BERITA_KATEGORI_STYLES = {
   Pembangunan: 'bg-sky-100 text-sky-800',
   Ekonomi: 'bg-amber-100 text-amber-800',

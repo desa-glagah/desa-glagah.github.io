@@ -7,37 +7,107 @@
     "harga": "Mulai Rp1.500 / pcs",
     "whatsapp": "6282315561758",
     "lokasi": "6GJ5+HCX, Jl. Raya Pakuniran, Krajan, Glagah, Kec. Pakuniran, Kabupaten Probolinggo, Jawa Timur 67292",
-    "foto": "assets/umkm/cahaya-cake.jpeg"
+    "foto": "assets/umkm/cahaya-cake.jpeg",
+    "menu": [
+      {
+        "kategori": "Produk Unggulan",
+        "items": [
+          { "nama": "Brownis", "harga": "Rp3.000" }
+        ]
+      },
+      {
+        "kategori": "Produk Lainnya",
+        "items": [
+          { "nama": "Risol", "harga": "Rp2.500" },
+          { "nama": "Lapis Percik", "harga": "Rp2.500" },
+          { "nama": "Lapis Bunga", "harga": "Rp1.500" },
+          { "nama": "Bolu Oven Hoping Messes", "harga": "Rp100.000" },
+          { "nama": "Donat Topping Messes Keju", "harga": "Rp2.500" },
+          { "nama": "Nona Manis", "harga": "Rp2.000" },
+          { "nama": "Putu Ayu", "harga": "Rp2.500" },
+          { "nama": "Bikang", "harga": "Rp2.500" },
+          { "nama": "Bolu Gulung", "harga": "Rp3.000" },
+          { "nama": "Lumpur Kentang", "harga": "Rp2.500" },
+          { "nama": "Brownis Lumer", "harga": "Rp3.000" },
+          { "nama": "Donat Messes", "harga": "Rp2.000" },
+          { "nama": "Kue Serabi", "harga": "Rp1.500" }
+        ]
+      }
+    ]
   },
   {
     "id": "umkm-002",
     "nama": "Frozen Bu Titin",
     "kategori": "Kuliner",
-    "deskripsi": "Titin Frozen Food merupakan UMKM kuliner milik Ibu Titin yang telah berdiri sejak tahun 2016. Berawal dari menjual bebek beku, usaha ini berkembang menjadi penyedia berbagai produk frozen food, termasuk kulit lumpia dan kulit pangsit. Sebagai salah satu pelopor usaha frozen food di wilayahnya, Titin Frozen Food telah memiliki pelanggan tetap yang terus mempercayai kualitas produknya.",
-    "harga": "Mulai Rp15.000",
+    "deskripsi": "Titin Frozen Food merupakan UMKM kuliner milik Ibu Titin yang telah berdiri sejak tahun 2016. Berawal dari menjual bebek beku, usaha ini berkembang menjadi penyedia berbagai produk frozen food, termasuk kulit lumpia dan kulit pangsit. Sebagai salah satu pelopor usaha frozen food di wilayahnya, Titin Frozen Food telah memiliki pelanggan tetap yang terus mempercayai kualitas produknya. Tidak hanya offline, pemesanan dan penjualan juga dilakukan secara online melalui Facebook, dengan layanan antar maupun pengambilan langsung di lokasi.",
+    "harga": "Mulai Rp2.500",
     "whatsapp": "6285230675070",
-    "lokasi": "Krajan, Glagah, Pakuniran, Kabupaten Probolinggo, Jawa Timur 67292",
-    "foto": null
+    "lokasi": "Desa Krajan, Glagah, Pakuniran, Kabupaten Probolinggo, Jawa Timur 67292",
+    "foto": null,
+    "menu": [
+      {
+        "kategori": "Katalog Produk",
+        "items": [
+          { "nama": "Ham Burger", "varian": "20pcs", "harga": "Rp18.000" },
+          { "nama": "Samosa", "varian": "25pcs", "harga": "Rp2.500" },
+          { "nama": "Tahu Bakso", "varian": "10pcs", "harga": "Rp28.000" },
+          { "nama": "Tahu Walik", "varian": "20pcs", "harga": "Rp13.000" },
+          { "nama": "Paket Burger - Daging", "varian": "500gr", "harga": "Rp45.000" },
+          { "nama": "Paket Burger - Kulit Tortilla", "harga": "Rp33.000" },
+          { "nama": "Siomay Ayam", "varian": "20pcs", "harga": "Rp32.000" },
+          { "nama": "Kebab", "harga": "Rp35.000" },
+          { "nama": "Smoke Beef", "varian": "500gr, Kotak", "harga": "Rp85.000" },
+          { "nama": "Smoke Beef", "varian": "500gr, Bulat", "harga": "Rp78.000" },
+          { "nama": "Rice Paper", "varian": "10pcs", "harga": "Rp15.000" },
+          { "nama": "Kulit Tahu", "harga": "Rp13.000" },
+          { "nama": "Beef Patties", "varian": "10pcs", "harga": "Rp52.000" },
+          { "nama": "Mix Vegetables", "varian": "500gr", "harga": "Rp17.000" },
+          { "nama": "Danish Pastry", "harga": "Rp50.000" },
+          { "nama": "Sushi Nori", "varian": "10pcs", "harga": "Rp33.000" },
+          { "nama": "Ungkepan All Varian", "varian": "Paru, Usus Sapi, Babat, Paru Balado", "harga": "Rp33.000" }
+        ]
+      }
+    ]
   },
   {
     "id": "umkm-003",
     "nama": "Rengginang Bu Mirza",
     "kategori": "Makanan Ringan",
-    "deskripsi": "Rengginang hasil produksi rumahan dengan bahan baku kualitas tinggi, cocok untuk camilan sehat.",
-    "harga": "Rp6.000 / bungkus",
+    "deskripsi": "UMKM ini berdiri pada Maret 2025 dengan fokus awal memproduksi rengginang mentah, terutama untuk memenuhi kebutuhan masyarakat menjelang Hari Raya Idulfitri. Setelah permintaan menurun pasca-Lebaran, usaha ini berinovasi dengan memasarkan rengginang yang telah digoreng dan siap konsumsi. Berkat cita rasa yang disukai pelanggan, usaha ini terus berkembang dan tetap berproduksi hingga saat ini.",
+    "harga": "Mulai Rp6.000 / bungkus",
     "whatsapp": "6282229923890",
     "lokasi": "Dusun Nyato, Desa Glagah, Kecamatan Pakuniran, Kabupaten Probolinggo.",
-    "foto": null
+    "foto": null,
+    "menu": [
+      {
+        "kategori": "Katalog Produk",
+        "items": [
+          { "nama": "Rengginang Mentah", "varian": "1 kg", "harga": "Rp50.000" },
+          { "nama": "Rengginang Sudah Goreng", "varian": "per bungkus", "harga": "Rp6.000" }
+        ]
+      }
+    ]
   },
   {
     "id": "umkm-004",
     "nama": "Nasgung & NasBak Bu Sukmawati",
     "kategori": "Kuliner",
-    "deskripsi": "Tempe segar produksi harian dengan kedelai pilihan, cocok untuk kebutuhan rumah tangga maupun warung makan.",
-    "harga": "Rp3.000 / pcs",
+    "deskripsi": "UMKM kuliner rumahan yang menyediakan nasi jagung, nasi bakar dengan varian ayam suwir kemangi dan tongkol suwir kemangi, serta rempeyek. Berawal dari penjualan nasi jagung secara daring, usaha ini terus berkembang dengan tujuan memberikan pilihan menu berkualitas sekaligus meningkatkan perekonomian keluarga.",
+    "harga": "Mulai Rp5.000",
     "whatsapp": "6285236505876",
     "lokasi": "Dusun Krajan RT.010/001, Desa Glagah, Kecamatan Pakuniran, Kabupaten Probolinggo.",
-    "foto": null
+    "foto": null,
+    "menu": [
+      {
+        "kategori": "Katalog Produk",
+        "items": [
+          { "nama": "Nasi Jagung (NasGung)", "harga": "Rp7.000" },
+          { "nama": "NasBak Ayam Suwir Kemangi", "harga": "Rp8.000" },
+          { "nama": "NasBak Tongkol Suwir Kemangi", "harga": "Rp8.000" },
+          { "nama": "Peyek Ebi", "varian": "per bungkus", "harga": "Rp5.000" }
+        ]
+      }
+    ]
   },
   {
     "id": "umkm-005",
@@ -58,5 +128,60 @@
     "whatsapp": "621234567890",
     "lokasi": "Blok Sawah Utara",
     "foto": null
+  },
+  {
+    "id": "umkm-007",
+    "nama": "Bu Kumariyah",
+    "kategori": "Kuliner",
+    "deskripsi": "UMKM kuliner rumahan milik Bu Kumariyah yang menyediakan makanan kering, makanan siap saji, hingga paket nasi kotak dan layanan catering untuk berbagai acara seperti nikahan. Cakupan produknya luas, mulai dari camilan kering (satru, abon ayam, sagon, rengginang, kue kacang musiman Ramadan), makanan siap saji harian (bubur, bongko), paket nasi kotak dan tumpeng, hingga layanan catering prasmanan dan produk musiman seperti aneka takjil selama Ramadan.",
+    "harga": "Bervariasi, mulai Rp5.000 (menyesuaikan pesanan untuk paket & catering)",
+    "whatsapp": "6285234141563",
+    "lokasi": "Dusun Krajan RT 09/RW 01, Desa Glagah, Kecamatan Pakuniran, Kabupaten Probolinggo.",
+    "foto": null,
+    "menu": [
+      {
+        "kategori": "Makanan Kering",
+        "items": [
+          { "nama": "Satru", "varian": "½ kg", "harga": "Harga menyusul" },
+          { "nama": "Satru", "varian": "1 kg", "harga": "Rp70.000" },
+          { "nama": "Abon Ayam", "varian": "1 ons", "harga": "Rp12.000" },
+          { "nama": "Abon Ayam", "varian": "¼ kg", "harga": "Rp30.000" },
+          { "nama": "Sagon", "harga": "Menyesuaikan pesanan (by request)" },
+          { "nama": "Rengginang", "harga": "Menyesuaikan pesanan (by request)" },
+          { "nama": "Kue Kacang", "varian": "Produksi saat bulan Ramadan", "harga": "Menyesuaikan pesanan (by request)" }
+        ]
+      },
+      {
+        "kategori": "Makanan Siap Saji",
+        "items": [
+          { "nama": "Bubur", "varian": "1 porsi", "harga": "Rp10.000" },
+          { "nama": "Bongko (dengan nangka)", "varian": "1 buah", "harga": "Rp6.000" },
+          { "nama": "Bongko (tanpa nangka)", "varian": "1 buah", "harga": "Rp5.000" }
+        ]
+      },
+      {
+        "kategori": "Paket & Catering",
+        "items": [
+          { "nama": "Nasi Kotak", "varian": "Paket reguler", "harga": "Rp20.000" },
+          { "nama": "Nasi Kotak", "varian": "Paket spesial", "harga": "Rp30.000" },
+          { "nama": "Nasi Jagung", "varian": "Pesanan catering", "harga": "Menyesuaikan pesanan" },
+          { "nama": "Nasi Kuning", "varian": "Pesanan catering", "harga": "Menyesuaikan pesanan" },
+          { "nama": "Tumpeng", "varian": "Ukuran standar", "harga": "Mulai Rp350.000" },
+          { "nama": "Sirih Pinang", "varian": "Paket", "harga": "Rp150.000" }
+        ]
+      },
+      {
+        "kategori": "Layanan Catering",
+        "items": [
+          { "nama": "Catering Prasmanan", "varian": "Untuk acara/nikahan", "harga": "Menyesuaikan pesanan (by request)" }
+        ]
+      },
+      {
+        "kategori": "Produk Musiman",
+        "items": [
+          { "nama": "Aneka Takjil", "varian": "Tersedia selama Ramadan", "harga": "Menyesuaikan jenis (by request)" }
+        ]
+      }
+    ]
   }
 ]
