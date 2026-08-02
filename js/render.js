@@ -59,25 +59,49 @@ function dgJobCardHTML(job) {
   `;
 }
 
-function dgUmkmThumbError(imgEl) {
+const DG_UMKM_KATEGORI_STYLES = {
+  Kuliner: 'bg-amber-100 text-amber-800',
+  Pertanian: 'bg-emerald-100 text-emerald-800',
+  Kerajinan: 'bg-indigo-100 text-indigo-800',
+};
+
+const DG_UMKM_PLACEHOLDER_ICON = `
+  <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M4 4h16v16H4V4zm4 4h8v8H8V8z"/></svg>
+`;
+
+function dgUmkmThumbError(imgEl, sizeClass) {
   const wrapper = imgEl.parentElement;
-  wrapper.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M4 4h16v16H4V4zm4 4h8v8H8V8z"/></svg>';
+  wrapper.innerHTML = '';
+  const div = document.createElement('div');
+  div.className = `${sizeClass || 'h-36'} w-full bg-emerald-50 flex items-center justify-center text-emerald-300`;
+  div.innerHTML = DG_UMKM_PLACEHOLDER_ICON;
+  wrapper.appendChild(div);
+}
+
+function dgUmkmThumbHTML(item, sizeClass) {
+  if (item.foto) {
+    return `<img src="${dgEscapeHTML(item.foto)}" alt="${dgEscapeHTML(item.nama)}"
+              class="${sizeClass} w-full object-cover"
+              onerror="dgUmkmThumbError(this, '${sizeClass}')" />`;
+  }
+  return `<div class="${sizeClass} w-full bg-emerald-50 flex items-center justify-center text-emerald-300">${DG_UMKM_PLACEHOLDER_ICON}</div>`;
 }
 
 function dgUmkmCardHTML(item) {
   const waMsg = dgUmkmContactMessage(item.nama);
   const waLink = dgBuildWhatsAppLink(item.whatsapp, waMsg);
   const waWebLink = dgBuildWhatsAppWebLink(item.whatsapp, waMsg);
+  const kategoriStyle = DG_UMKM_KATEGORI_STYLES[item.kategori] || 'bg-emerald-100 text-emerald-800';
   return `
     <article class="dg-card rounded-xl border border-emerald-100 bg-white overflow-hidden shadow-sm flex flex-col" data-kategori="${dgEscapeHTML(item.kategori)}">
-      <div class="h-36 bg-emerald-50 flex items-center justify-center text-emerald-300 overflow-hidden">
-        ${item.foto
-          ? `<img src="${dgEscapeHTML(item.foto)}" alt="${dgEscapeHTML(item.nama)}" class="h-36 w-full object-cover" onerror="dgUmkmThumbError(this)" />`
-          : `<svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M4 4h16v16H4V4zm4 4h8v8H8V8z"/></svg>`}
-      </div>
+      <a href="#/umkm/${encodeURIComponent(item.id)}" class="block overflow-hidden">
+        ${dgUmkmThumbHTML(item, 'h-36')}
+      </a>
       <div class="p-4 flex flex-col flex-1">
-        <span class="dg-badge inline-block mb-2 w-fit rounded-full bg-emerald-100 text-emerald-800 px-2.5 py-1">${dgEscapeHTML(item.kategori)}</span>
-        <h3 class="font-display font-bold text-emerald-950 leading-snug mb-1">${dgEscapeHTML(item.nama)}</h3>
+        <span class="dg-badge inline-block mb-2 w-fit rounded-full px-2.5 py-1 ${kategoriStyle}">${dgEscapeHTML(item.kategori)}</span>
+        <h3 class="font-display font-bold text-emerald-950 leading-snug mb-1">
+          <a href="#/umkm/${encodeURIComponent(item.id)}" class="hover:text-amber-600 transition-colors">${dgEscapeHTML(item.nama)}</a>
+        </h3>
         <p class="text-sm text-gray-600 mb-3 line-clamp-3">${dgEscapeHTML(item.deskripsi)}</p>
         <div class="mt-auto pt-3 border-t border-emerald-50 flex items-center justify-between gap-3">
           <p class="text-sm font-semibold text-amber-600">${dgEscapeHTML(item.harga)}</p>
