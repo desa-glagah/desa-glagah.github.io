@@ -59,42 +59,51 @@ function dgJobCardHTML(job) {
   `;
 }
 
-function dgUmkmThumbError(imgEl) {
+const DG_UMKM_KATEGORI_STYLES = {
+  Kuliner: 'bg-amber-100 text-amber-800',
+  Pertanian: 'bg-emerald-100 text-emerald-800',
+  Kerajinan: 'bg-indigo-100 text-indigo-800',
+};
+
+const DG_UMKM_PLACEHOLDER_ICON = `
+  <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M4 4h16v16H4V4zm4 4h8v8H8V8z"/></svg>
+`;
+
+function dgUmkmThumbError(imgEl, sizeClass) {
   const wrapper = imgEl.parentElement;
-  wrapper.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M4 4h16v16H4V4zm4 4h8v8H8V8z"/></svg>';
+  wrapper.innerHTML = '';
+  const div = document.createElement('div');
+  div.className = `${sizeClass} w-full bg-emerald-50 flex items-center justify-center text-emerald-300`;
+  div.innerHTML = DG_UMKM_PLACEHOLDER_ICON;
+  wrapper.appendChild(div);
+}
+
+function dgUmkmThumbHTML(item, sizeClass) {
+  if (item.foto) {
+    return `<img src="${dgEscapeHTML(item.foto)}" alt="${dgEscapeHTML(item.nama)}"
+              class="${sizeClass} w-full object-cover"
+              onerror="dgUmkmThumbError(this, '${sizeClass}')" />`;
+  }
+  return `<div class="${sizeClass} w-full bg-emerald-50 flex items-center justify-center text-emerald-300">${DG_UMKM_PLACEHOLDER_ICON}</div>`;
 }
 
 function dgUmkmCardHTML(item) {
-  const waMsg = dgUmkmContactMessage(item.nama);
-  const waLink = dgBuildWhatsAppLink(item.whatsapp, waMsg);
-  const waWebLink = dgBuildWhatsAppWebLink(item.whatsapp, waMsg);
+  const kategoriStyle = DG_UMKM_KATEGORI_STYLES[item.kategori] || 'bg-emerald-100 text-emerald-800';
   return `
-    <article class="dg-card rounded-xl border border-emerald-100 bg-white overflow-hidden shadow-sm flex flex-col" data-kategori="${dgEscapeHTML(item.kategori)}">
-      <div class="h-36 bg-emerald-50 flex items-center justify-center text-emerald-300 overflow-hidden">
-        ${item.foto
-          ? `<img src="${dgEscapeHTML(item.foto)}" alt="${dgEscapeHTML(item.nama)}" class="h-36 w-full object-cover" onerror="dgUmkmThumbError(this)" />`
-          : `<svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M4 4h16v16H4V4zm4 4h8v8H8V8z"/></svg>`}
+    <a href="#/umkm/${encodeURIComponent(item.id)}" class="dg-card block rounded-xl border border-emerald-100 bg-white overflow-hidden shadow-sm flex flex-col" data-kategori="${dgEscapeHTML(item.kategori)}">
+      <div class="overflow-hidden">
+        ${dgUmkmThumbHTML(item, 'h-36')}
       </div>
       <div class="p-4 flex flex-col flex-1">
-        <span class="dg-badge inline-block mb-2 w-fit rounded-full bg-emerald-100 text-emerald-800 px-2.5 py-1">${dgEscapeHTML(item.kategori)}</span>
+        <span class="dg-badge inline-block mb-2 w-fit rounded-full px-2.5 py-1 ${kategoriStyle}">${dgEscapeHTML(item.kategori)}</span>
         <h3 class="font-display font-bold text-emerald-950 leading-snug mb-1">${dgEscapeHTML(item.nama)}</h3>
         <p class="text-sm text-gray-600 mb-3 line-clamp-3">${dgEscapeHTML(item.deskripsi)}</p>
         <div class="mt-auto pt-3 border-t border-emerald-50 flex items-center justify-between gap-3">
           <p class="text-sm font-semibold text-amber-600">${dgEscapeHTML(item.harga)}</p>
-          <div class="shrink-0 flex flex-col items-end gap-1">
-            <a href="${waLink}" target="_blank" rel="noopener noreferrer"
-               class="inline-flex items-center gap-1.5 bg-emerald-900 hover:bg-emerald-800 text-white text-xs font-semibold px-3.5 py-2 rounded-full transition-colors">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M12.04 2c-5.52 0-10 4.48-10 10 0 1.76.46 3.48 1.34 5L2 22l5.14-1.35a10 10 0 004.9 1.25h.01c5.52 0 10-4.48 10-10s-4.48-10-10-10zm0 18.15h-.01a8.16 8.16 0 01-4.16-1.14l-.3-.18-3.05.8.82-2.97-.2-.31a8.15 8.15 0 01-1.25-4.35c0-4.5 3.66-8.16 8.16-8.16a8.1 8.1 0 015.77 2.39 8.1 8.1 0 012.39 5.77c0 4.5-3.67 8.16-8.17 8.16zm4.47-6.12c-.24-.12-1.45-.72-1.68-.8-.22-.08-.39-.12-.55.12-.16.24-.63.8-.78.96-.14.16-.29.18-.53.06-.24-.12-1.03-.38-1.96-1.21-.72-.65-1.21-1.44-1.35-1.68-.14-.24-.02-.37.11-.49.11-.11.24-.29.36-.43.12-.14.16-.24.24-.4.08-.16.04-.31-.02-.43-.06-.12-.55-1.32-.75-1.81-.2-.48-.4-.41-.55-.42h-.47c-.16 0-.43.06-.65.31-.22.24-.86.84-.86 2.04 0 1.2.88 2.36 1 2.52.12.16 1.73 2.64 4.2 3.7.59.25 1.05.4 1.41.52.59.19 1.13.16 1.56.1.48-.07 1.45-.59 1.65-1.16.2-.57.2-1.06.14-1.16-.06-.1-.22-.16-.46-.28z"/></svg>
-              WhatsApp
-            </a>
-            <a href="${waWebLink}" target="_blank" rel="noopener noreferrer"
-               class="text-[11px] text-gray-400 hover:text-emerald-700 transition-colors">
-              Buka lewat browser
-            </a>
-          </div>
+          <span class="shrink-0 text-sm font-semibold text-emerald-800">Lihat detail &rarr;</span>
         </div>
       </div>
-    </article>
+    </a>
   `;
 }
 

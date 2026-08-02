@@ -13,8 +13,8 @@ JSON di folder `data/` (arsitektur data berbasis Git).
 | Informasi Desa | ✅ Siap | Data kependudukan sudah data asli |
 | Profil Desa | ✅ Siap | 13 perangkat sudah nama & foto asli |
 | Berita Desa | ✅ Siap | 2 berita sudah asli lengkap dengan foto |
+| Katalog UMKM | ⚠️ Hampir siap | 4 dari 6 produk sudah data asli (nama, deskripsi, harga, lokasi, WhatsApp asli) lengkap dengan halaman detail (`#/umkm/:id`). **"Batik Tulis Glagah Asri" dan "Pupuk Kompos Tani Makmur"** masih data contoh tanpa foto dan nomor WhatsApp-nya masih dummy `621234567890` |
 | Lowongan Pekerjaan | ⚠️ Perlu diedit | 4 lowongan di `data/jobs.json` masih data contoh/fiktif dan nomor `whatsapp`-nya masih dummy — ganti dengan lowongan asli (lihat bagian "Menambahkan/Mengedit Lowongan Pekerjaan") |
-| Katalog UMKM | ⚠️ Perlu diedit | Hanya "Cahaya Cake" yang sudah asli (foto + deskripsi); 5 produk lain di `data/umkm.json` masih contoh tanpa foto. **Semua 6 produk** (termasuk Cahaya Cake) masih pakai nomor `whatsapp` dummy `621234567890` — perlu diganti nomor asli pemilik usaha |
 
 Nomor WhatsApp admin desa (`DG_ADMIN_WHATSAPP` di `js/pages/lowongan.js`)
 sudah diisi nomor resmi kantor desa.
@@ -28,7 +28,7 @@ desa-glagah/
 │   └── style.css           # Watermark hero, fokus keyboard, kartu, dsb.
 ├── js/
 │   ├── app.js               # Router hash (#/lowongan, #/informasi, #/profil, #/umkm, #/berita, #/berita/:id)
-│   ├── data.js               # Ambil data JSON + localStorage untuk lowongan baru
+│   ├── data.js               # Ambil data JSON dari data/
 │   ├── whatsapp.js            # Sanitasi nomor & pembuat link wa.me
 │   ├── render.js               # Komponen kartu lowongan, UMKM, berita (dipakai bersama)
 │   └── pages/
@@ -36,7 +36,7 @@ desa-glagah/
 │       ├── lowongan.js           # Papan lowongan + formulir "Pasang Lowongan" + notifikasi WA admin
 │       ├── informasi.js           # Letak geografis + data kependudukan
 │       ├── profil.js               # Visi & misi + struktur perangkat desa
-│       ├── umkm.js                  # Katalog UMKM + filter kategori
+│       ├── umkm.js                  # Katalog UMKM (filter kategori) + halaman detail per produk (#/umkm/:id)
 │       └── berita.js                 # Daftar berita (filter kategori) + halaman detail per berita (#/berita/:id)
 ├── data/
 │   ├── jobs.json             # Data lowongan (sumber kebenaran)
@@ -84,15 +84,15 @@ Situs ini statis dan tidak memiliki server backend, sehingga formulir
 **"Pasang Lowongan Sekarang"** tidak bisa langsung menulis ke `data/jobs.json`.
 Sebagai gantinya:
 
-1. Pengunjung mengisi formulir → data tersimpan sementara di `localStorage`
-   browser pengunjung dan langsung tampil di daftar dengan label
-   **"Menunggu Verifikasi Admin"**.
-2. WhatsApp otomatis terbuka berisi ringkasan lowongan yang dikirim ke
-   **nomor kantor desa** (`+62 852-3697-0941`), sehingga admin langsung
-   mendapat notifikasi tanpa perlu mengecek localStorage secara manual.
-3. Pengelola website (admin desa) meninjau data tersebut, lalu menambahkannya
-   secara manual ke `data/jobs.json` dan melakukan `git commit` + `git push`
-   agar lowongan resmi tampil bagi semua pengunjung.
+1. Pengunjung mengisi formulir → begitu klik "Kirim Lowongan", WhatsApp
+   otomatis terbuka berisi ringkasan lowongan yang dikirim ke **nomor kantor
+   desa** (`+62 852-3697-0941`). Data ini **tidak disimpan** di mana pun di
+   browser pengunjung — jadi tidak ada risiko duplikat atau data uji coba
+   yang nyangkut di perangkat orang lain.
+2. Pengelola website (admin desa) meninjau ringkasan yang masuk lewat
+   WhatsApp, lalu menambahkannya secara manual ke `data/jobs.json` dan
+   melakukan `git commit` + `git push` agar lowongan resmi tampil bagi
+   semua pengunjung.
 
 Nomor tujuan notifikasi ini diatur lewat konstanta `DG_ADMIN_WHATSAPP` di
 `js/pages/lowongan.js` — saat ini sudah diisi nomor resmi kantor desa. Kalau
@@ -105,12 +105,18 @@ sehingga cukup diganti untuk memanggil layanan backend/Google Form/Sheet API.
 
 ## Kustomisasi Nomor WhatsApp
 
-Nomor WhatsApp pada `data/jobs.json` dan `data/umkm.json` **masih memakai
-data contoh** (`621234567890`) di seluruh entri saat ini — termasuk pada
-produk UMKM "Cahaya Cake" yang datanya sendiri sudah asli. Ganti dengan
-nomor asli pemilik usaha/pemberi kerja masing-masing sebelum publikasi.
-Format yang diterima: diawali `0` (mis. `0812xxxx`, otomatis dikonversi ke
-`62`) atau langsung `62812xxxx`.
+Nomor WhatsApp pada `data/umkm.json` **sudah diisi nomor asli** pemilik
+masing-masing usaha. Nomor WhatsApp pada `data/jobs.json` **masih memakai
+data contoh** (`621234567890`) di seluruh entri — ganti dengan nomor asli
+pemberi kerja sebelum publikasi. Format yang diterima: diawali `0` (mis.
+`0812xxxx`, otomatis dikonversi ke `62`) atau langsung `62812xxxx`.
+
+Setiap tombol WhatsApp di situs ini (kontak UMKM, lamar lowongan, notifikasi
+admin) disertai link cadangan kecil "Buka lewat browser" yang mengarah ke
+`web.whatsapp.com` (dibuat oleh `dgBuildWhatsAppWebLink` di `js/whatsapp.js`).
+Ini jaga-jaga untuk perangkat/browser yang tidak punya aplikasi WhatsApp
+terpasang, yang biasanya memunculkan error semacam "file ini tidak memiliki
+aplikasi terkait" saat link `wa.me` dicoba dibuka langsung.
 
 ## Foto Perangkat Desa
 
@@ -240,6 +246,18 @@ Cara menambah produk baru:
 5. Simpan file, lalu `git commit` + `git push` agar produk baru tampil di
    halaman **Katalog UMKM** bagi semua pengunjung.
 
+Setiap produk punya halaman detail sendiri di `#/umkm/<id>` (contoh:
+`#/umkm/umkm-001`), berisi foto besar, deskripsi lengkap, lokasi, tombol
+"Hubungi via WhatsApp" (dengan link cadangan "Buka lewat browser" kalau
+aplikasi WhatsApp tidak terinstal), dan daftar produk sejenis lainnya.
+Kartu di halaman katalog cukup diklik untuk membuka halaman detail ini.
+
+**Penting soal nama file foto:** GitHub Pages bersifat *case-sensitive* —
+`Cahaya-Cake.jpeg` dan `cahaya-cake.jpeg` dianggap dua file berbeda. Pastikan
+huruf besar/kecil pada nama file yang diunggah ke `assets/umkm/` **persis
+sama** dengan yang ditulis di field `foto` pada `umkm.json`, atau foto tidak
+akan tampil sama sekali walau tidak ada pesan error yang terlihat.
+
 Filter kategori pada halaman Katalog UMKM dibuat otomatis dari nilai
 `kategori` yang ada di data — jadi kategori baru (mis. "Peternakan") akan
 langsung muncul sebagai tombol filter tanpa perlu ubah kode.
@@ -281,12 +299,13 @@ Cara menambah lowongan baru secara manual (sebagai admin):
 5. `createdAt` dipakai untuk mengurutkan lowongan dari yang terbaru — isi
    dengan format ISO (`YYYY-MM-DDTHH:mm:ss.sssZ`), atau salin waktu saat
    ini dari lowongan lain sebagai contoh format.
-6. Simpan file, lalu `git commit` + `git push` agar lowongan tampil resmi
-   (tanpa label "Menunggu Verifikasi Admin") di halaman **Lowongan Pekerjaan**.
+6. Simpan file, lalu `git commit` + `git push` agar lowongan tampil di
+   halaman **Lowongan Pekerjaan**.
 
 **Alur lowongan dari pengunjung (via formulir "Pasang Lowongan"):** seperti
 dijelaskan di bagian "Alur data Git-based" di atas, lowongan yang diisi
 pengunjung lewat formulir di halaman Lowongan **tidak otomatis** masuk ke
-`data/jobs.json` — admin akan menerima ringkasannya via WhatsApp, lalu perlu
+`data/jobs.json` — admin menerima ringkasannya via WhatsApp, lalu perlu
 menyalin isinya secara manual mengikuti struktur di atas dan melakukan
 langkah 1-6 supaya lowongan tersebut resmi tampil bagi semua pengunjung.
+Formulir pengunjung sendiri tidak punya field foto — cukup teks.
