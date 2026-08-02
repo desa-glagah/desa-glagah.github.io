@@ -22,10 +22,20 @@ async function dgRoute() {
   const path = dgCurrentPath();
   const outlet = document.getElementById('dg-app-content');
 
-  // Dynamic route: an individual news article page, e.g. #/berita/berita-001
+  // Dynamic routes: an individual news article or UMKM product page,
+  // e.g. #/berita/berita-001 or #/umkm/umkm-001
   const beritaMatch = path.match(/^\/berita\/(.+)$/);
-  const renderFn = beritaMatch ? dgRenderBeritaDetail : (DG_ROUTES[path] || DG_ROUTES['/']);
-  const renderArg = beritaMatch ? decodeURIComponent(beritaMatch[1]) : undefined;
+  const umkmMatch = path.match(/^\/umkm\/(.+)$/);
+
+  let renderFn = DG_ROUTES[path] || DG_ROUTES['/'];
+  let renderArg;
+  if (beritaMatch) {
+    renderFn = dgRenderBeritaDetail;
+    renderArg = decodeURIComponent(beritaMatch[1]);
+  } else if (umkmMatch) {
+    renderFn = dgRenderUMKMDetail;
+    renderArg = decodeURIComponent(umkmMatch[1]);
+  }
 
   document.querySelectorAll('.dg-nav-link').forEach((link) => {
     const linkPath = link.getAttribute('href').replace(/^#/, '');
