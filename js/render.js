@@ -107,6 +107,27 @@ function dgUmkmCardHTML(item) {
   `;
 }
 
+const DG_MENU_PLACEHOLDER_ICON = `
+  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M4 4h16v16H4V4zm4 4h8v8H8V8z"/></svg>
+`;
+
+function dgMenuItemThumbError(imgEl) {
+  const wrapper = imgEl.parentElement;
+  wrapper.innerHTML = `<div class="h-12 w-12 rounded-lg bg-emerald-50 flex items-center justify-center text-emerald-300">${DG_MENU_PLACEHOLDER_ICON}</div>`;
+}
+
+function dgMenuItemThumbHTML(it) {
+  // No 'foto' set on this item -> skip the thumbnail slot entirely (no image, no placeholder box).
+  if (!it.foto) return '';
+  return `
+    <div class="h-12 w-12 rounded-lg overflow-hidden shrink-0 border border-emerald-100 bg-emerald-50">
+      <img src="${dgEscapeHTML(it.foto)}" alt="${dgEscapeHTML(it.nama)}"
+           class="h-12 w-12 object-cover"
+           onerror="dgMenuItemThumbError(this)" />
+    </div>
+  `;
+}
+
 function dgUmkmMenuHTML(menu) {
   if (!menu || !menu.length) return '';
   return `
@@ -118,10 +139,13 @@ function dgUmkmMenuHTML(menu) {
             ${grup.kategori ? `<h3 class="text-sm font-semibold text-emerald-800 uppercase tracking-wide mb-2">${dgEscapeHTML(grup.kategori)}</h3>` : ''}
             <div class="rounded-xl border border-emerald-100 divide-y divide-emerald-50 overflow-hidden bg-white">
               ${(grup.items || []).map((it) => `
-                <div class="flex items-start justify-between gap-4 px-4 py-2.5">
-                  <div class="min-w-0">
-                    <p class="text-sm font-medium text-emerald-950">${dgEscapeHTML(it.nama)}</p>
-                    ${it.varian ? `<p class="text-xs text-gray-500">${dgEscapeHTML(it.varian)}</p>` : ''}
+                <div class="flex items-center justify-between gap-4 px-4 py-2.5">
+                  <div class="flex items-center gap-3 min-w-0">
+                    ${dgMenuItemThumbHTML(it)}
+                    <div class="min-w-0">
+                      <p class="text-sm font-medium text-emerald-950">${dgEscapeHTML(it.nama)}</p>
+                      ${it.varian ? `<p class="text-xs text-gray-500">${dgEscapeHTML(it.varian)}</p>` : ''}
+                    </div>
                   </div>
                   <p class="shrink-0 text-sm font-semibold text-amber-600 whitespace-nowrap">${dgEscapeHTML(it.harga || '')}</p>
                 </div>
